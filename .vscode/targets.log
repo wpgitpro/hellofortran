@@ -1,4 +1,4 @@
-make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+make all --PRINT-data-base --no-builtin-variables --no-builtin-rules --question
 make: *** No rule to make target 'all'.  Stop.
 
 # GNU Make 4.2.1
@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Thu Jun 23 21:40:09 2022
+# Make data base, PRINTed on Fri Jun 24 09:59:35 2022
 
 # Variables
 
@@ -55,7 +55,7 @@ PATH = /home/mrogers/.vscode-server/bin/30d9c6cd9483b2cc586687151bcbcd635f373630
 # environment
 VSCODE_LOG_STACK = false
 # environment
-VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-c73e1b60-3106-4b02-9246-a7c10977df71.sock
+VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-8b4e510b-c88b-4326-b252-681ff8ca16e3.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -69,7 +69,7 @@ PWD = /home/mrogers/projects/fortran/hellofortran
 # default
 .LOADED := 
 # environment
-WSL_INTEROP = /run/WSL/35_interop
+WSL_INTEROP = /run/WSL/13_interop
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
@@ -148,8 +148,10 @@ TERM = xterm-256color
 VSCODE_EXTHOST_WILL_SEND_SOCKET = true
 # environment
 WSL_DISTRO_NAME = Ubuntu
+# environment
+MOTD_SHOWN = update-motd
 # variable set hash-table stats:
-# Load=68/1024=7%, Rehash=0, Collisions=4/93=4%
+# Load=69/1024=7%, Rehash=0, Collisions=4/94=4%
 
 # Pattern-specific Variable Values
 
@@ -157,9 +159,9 @@ WSL_DISTRO_NAME = Ubuntu
 
 # Directories
 
-# . (device 2064, inode 40015): 10 files, no impossibilities.
+# . (device 2064, inode 40015): 11 files, no impossibilities.
 
-# 10 files, no impossibilities in 1 directories.
+# 11 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -202,12 +204,12 @@ say_hello:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 16 / storage = 151 B / avg = 9 B
-# current buf: size = 8162 B / used = 151 B / count = 16 / avg = 9 B
+# strcache buffers: 1 (0) / strings = 17 / storage = 162 B / avg = 9 B
+# current buf: size = 8162 B / used = 162 B / count = 17 / avg = 9 B
 
-# strcache performance: lookups = 21 / hit rate = 23%
+# strcache performance: lookups = 22 / hit rate = 22%
 # hash-table stats:
-# Load=16/8192=0%, Rehash=0, Collisions=1/21=5%
-# Finished Make data base on Thu Jun 23 21:40:09 2022
+# Load=17/8192=0%, Rehash=0, Collisions=1/22=5%
+# Finished Make data base on Fri Jun 24 09:59:35 2022
 
  

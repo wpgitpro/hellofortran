@@ -1,10 +1,10 @@
 PROGRAM helloworld
-use mathModule
-implicit none
+USE mathModule
+IMPLICIT NONE
 COMPLEX :: link
 link = (3,4)
-print *, "Hello World!"  
-print *, "pi:", pi, "e:", e, "gamma:", gamma  
-print *, link
-stop 0 
+PRINT *, "Hello World!"  
+PRINT *, "pi:", pi, "e:", e, "gamma:", gamma  
+PRINT *, link
+STOP 0 
 END PROGRAM helloworld
