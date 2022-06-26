@@ -1,4 +1,4 @@
-make all --PRINT-data-base --no-builtin-variables --no-builtin-rules --question
+make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 make: *** No rule to make target 'all'.  Stop.
 
 # GNU Make 4.2.1
@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, PRINTed on Fri Jun 24 09:59:35 2022
+# Make data base, printed on Sat Jun 25 21:16:23 2022
 
 # Variables
 
@@ -36,6 +36,8 @@ SHELL = /bin/sh
 VSCODE_NLS_CONFIG = {"locale":"en","availableLanguages":{}}
 # environment
 _ = /home/mrogers/.vscode-server/bin/30d9c6cd9483b2cc586687151bcbcd635f373630/node
+# makefile (from 'makefile', line 7)
+CFLAGS = "-c"
 # makefile (from 'makefile', line 1)
 MAKEFILE_LIST :=  makefile
 # 'override' directive
@@ -52,10 +54,12 @@ VSCODE_CWD = /mnt/c/Users/mrogers/AppData/Local/Programs/Microsoft VS Code
 MAKE_HOST := x86_64-pc-linux-gnu
 # environment
 PATH = /home/mrogers/.vscode-server/bin/30d9c6cd9483b2cc586687151bcbcd635f373630/bin/remote-cli:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/Microsoft SQL Server/Client SDK/ODBC/110/Tools/Binn/:/mnt/c/Program Files (x86)/Microsoft SQL Server/120/Tools/Binn/:/mnt/c/Program Files/Microsoft SQL Server/120/Tools/Binn/:/mnt/c/Program Files/Microsoft SQL Server/120/DTS/Binn/:/mnt/c/Program Files (x86)/Microsoft SQL Server/150/DTS/Binn/:/mnt/c/Program Files/Azure Data Studio/bin:/mnt/c/Program Files/nodejs/:/mnt/c/Users/mrogers/AppData/Local/Programs/Python/Python37-32/Scripts/:/mnt/c/Users/mrogers/AppData/Local/Programs/Python/Python37-32/:/mnt/c/Users/mrogers/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/mrogers/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/mrogers/AppData/Local/GitHubDesktop/bin:/mnt/c/Users/mrogers/AppData/Local/Microsoft/WindowsApps:/mnt/c/Program Files/Azure Data Studio/bin:/mnt/c/Users/mrogers/AppData/Roaming/npm:/mnt/c/Users/mrogers/AppData/Local/Programs/mongosh/:/snap/bin
+# makefile (from 'makefile', line 6)
+FFLAGS = "-c"
 # environment
 VSCODE_LOG_STACK = false
 # environment
-VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-8b4e510b-c88b-4326-b252-681ff8ca16e3.sock
+VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-a112a763-67fc-491e-9cfe-c682d2ea83ee.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -92,6 +96,8 @@ MAKE = $(MAKE_COMMAND)
 MAKECMDGOALS := all
 # environment
 SHLVL = 0
+# makefile (from 'makefile', line 5)
+CC = gcc
 # default
 MAKE_VERSION := 4.2.1
 # environment
@@ -151,7 +157,7 @@ WSL_DISTRO_NAME = Ubuntu
 # environment
 MOTD_SHOWN = update-motd
 # variable set hash-table stats:
-# Load=69/1024=7%, Rehash=0, Collisions=4/94=4%
+# Load=72/1024=7%, Rehash=0, Collisions=4/97=4%
 
 # Pattern-specific Variable Values
 
@@ -179,7 +185,7 @@ all:
 # Not a target:
 makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-23 13:24:40.4441725
+#  Last modified 2022-06-24 10:01:45.5865302
 #  File has been updated.
 #  Successfully updated.
 
@@ -193,7 +199,7 @@ say_hello:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'makefile', line 7):
+#  recipe to execute (from 'makefile', line 10):
 	@echo $(FC)
 
 # files hash-table stats:
@@ -210,6 +216,6 @@ say_hello:
 # strcache performance: lookups = 22 / hit rate = 22%
 # hash-table stats:
 # Load=17/8192=0%, Rehash=0, Collisions=1/22=5%
-# Finished Make data base on Fri Jun 24 09:59:35 2022
+# Finished Make data base on Sat Jun 25 21:16:23 2022
 
  
