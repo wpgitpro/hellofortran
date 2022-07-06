@@ -1,4 +1,4 @@
-!
+! Program gnlink
 ! Version: 0.1
 !
 PROGRAM helloworld
