@@ -89,7 +89,7 @@
       DO 50 N=1,NL
           DO 45 R=1,8
               N1=I+(N-1)*8+R-1
-              LS(N,R)=INT(MODEL(N1))
+              LS(N,R)=(IN)T(MODEL(N1))
    45     CONTINUE
    50 CONTINUE
       ND = INT(RESULT(2))

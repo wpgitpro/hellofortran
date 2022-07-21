@@ -127,7 +127,7 @@ C 9    close (7, status='keep')
       CHARACTER*1 respns
       Wb=cmplx(0.0,0.0)
       Zb=cmplx(0.0,0.0)
- 1    Write (*,4) 'Enter the x&y coordinates of each precsion points.'
+ 1    Write (*,4) 'Enter the x&y coordinates of each precision point.'
       Write (*,5) 'Then the angular orientation of the point.'
       DO 90 n=1,3
           write (*,121) 'The x coordinate of Position ',n,' is?'

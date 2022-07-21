@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri Jul 15 08:58:12 2022
+# Make data base, printed on Thu Jul 21 09:27:49 2022
 
 # Variables
 
@@ -31,7 +31,7 @@ SHELL = /bin/sh
 # environment
 VSCODE_NLS_CONFIG = {"locale":"en","availableLanguages":{}}
 # environment
-_ = /home/mrogers/.vscode-server/bin/b06ae3b2d2dbfe28bca3134cc6be65935cdfea6a/node
+_ = /home/mrogers/.vscode-server/bin/3b889b090b5ad5793f524b5d1d39fda662b96a2a/node
 # makefile (from 'Makefile', line 7)
 CFLAGS = "-c"
 # makefile (from 'Makefile', line 1)
@@ -47,13 +47,13 @@ VSCODE_CWD = /mnt/c/Users/mroge/AppData/Local/Programs/Microsoft VS Code
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
 # environment
-PATH = /home/mrogers/.vscode-server/bin/b06ae3b2d2dbfe28bca3134cc6be65935cdfea6a/bin/remote-cli:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/Microsoft SQL Server/Client SDK/ODBC/110/Tools/Binn/:/mnt/c/Program Files (x86)/Microsoft SQL Server/120/Tools/Binn/:/mnt/c/Program Files/Microsoft SQL Server/120/Tools/Binn/:/mnt/c/Program Files/Microsoft SQL Server/120/DTS/Binn/:/mnt/c/Program Files (x86)/Microsoft SQL Server/150/DTS/Binn/:/mnt/c/Program Files/Azure Data Studio/bin:/mnt/c/Program Files (x86)/Simply Fortran 3/mingw-w64/bin:/mnt/c/Program Files (x86)/Simply Fortran 3/mingw-w64/x86_64-w64-mingw32/lib32:/mnt/c/Program Files (x86)/Simply Fortran 3/mingw-w64/x86_64-w64-mingw32/lib64:/mnt/c/Program Files/nodejs/:/mnt/c/Users/mroge/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/mroge/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Program Files/Azure Data Studio/bin:/mnt/c/Users/mroge/AppData/Local/GitHubDesktop/bin:/mnt/c/Users/mroge/AppData/Roaming/npm:/mnt/c/Users/mroge/AppData/Local/Programs/mongosh/:/snap/bin
+PATH = /home/mrogers/.vscode-server/bin/3b889b090b5ad5793f524b5d1d39fda662b96a2a/bin/remote-cli:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/Microsoft SQL Server/Client SDK/ODBC/110/Tools/Binn/:/mnt/c/Program Files (x86)/Microsoft SQL Server/120/Tools/Binn/:/mnt/c/Program Files/Microsoft SQL Server/120/Tools/Binn/:/mnt/c/Program Files/Microsoft SQL Server/120/DTS/Binn/:/mnt/c/Program Files (x86)/Microsoft SQL Server/150/DTS/Binn/:/mnt/c/Program Files/Azure Data Studio/bin:/mnt/c/Program Files (x86)/Simply Fortran 3/mingw-w64/bin:/mnt/c/Program Files (x86)/Simply Fortran 3/mingw-w64/x86_64-w64-mingw32/lib32:/mnt/c/Program Files (x86)/Simply Fortran 3/mingw-w64/x86_64-w64-mingw32/lib64:/mnt/c/Program Files/nodejs/:/mnt/c/Users/mroge/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/mroge/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Program Files/Azure Data Studio/bin:/mnt/c/Users/mroge/AppData/Local/GitHubDesktop/bin:/mnt/c/Users/mroge/AppData/Roaming/npm:/mnt/c/Users/mroge/AppData/Local/Programs/mongosh/:/snap/bin
 # makefile (from 'Makefile', line 6)
 FFLAGS = "-c"
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-fd60b535-3f16-4386-a90d-4935ace23c11.sock
+VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-481be830-337c-4ba0-84f8-784c356ffe98.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -155,9 +155,9 @@ MOTD_SHOWN = update-motd
 
 # Directories
 
-# . (device 2064, inode 392): 15 files, no impossibilities.
+# . (device 2064, inode 392): 16 files, no impossibilities.
 
-# 15 files, no impossibilities in 1 directories.
+# 16 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -200,13 +200,13 @@ say_hello:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 21 / storage = 203 B / avg = 9 B
-# current buf: size = 8162 B / used = 203 B / count = 21 / avg = 9 B
+# strcache buffers: 1 (0) / strings = 22 / storage = 213 B / avg = 9 B
+# current buf: size = 8162 B / used = 213 B / count = 22 / avg = 9 B
 
-# strcache performance: lookups = 26 / hit rate = 19%
+# strcache performance: lookups = 27 / hit rate = 18%
 # hash-table stats:
-# Load=21/8192=0%, Rehash=0, Collisions=1/26=4%
-# Finished Make data base on Fri Jul 15 08:58:12 2022
+# Load=22/8192=0%, Rehash=0, Collisions=1/27=4%
+# Finished Make data base on Thu Jul 21 09:27:49 2022
 
  
 make: *** No rule to make target 'all'.  Stop.
