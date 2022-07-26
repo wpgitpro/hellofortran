@@ -1,4 +1,6 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+make: *** No rule to make target 'all'.  Stop.
+
 # GNU Make 4.2.1
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2016 Free Software Foundation, Inc.
@@ -6,7 +8,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Thu Jul 21 09:27:49 2022
+# Make data base, printed on Tue Jul 26 09:01:45 2022
 
 # Variables
 
@@ -53,7 +55,7 @@ FFLAGS = "-c"
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-481be830-337c-4ba0-84f8-784c356ffe98.sock
+VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-e4c8b916-5b4e-4762-9313-1daa25ba8f49.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -206,8 +208,6 @@ say_hello:
 # strcache performance: lookups = 27 / hit rate = 18%
 # hash-table stats:
 # Load=22/8192=0%, Rehash=0, Collisions=1/27=4%
-# Finished Make data base on Thu Jul 21 09:27:49 2022
+# Finished Make data base on Tue Jul 26 09:01:45 2022
 
  
-make: *** No rule to make target 'all'.  Stop.
-
