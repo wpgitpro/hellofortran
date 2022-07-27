@@ -19,6 +19,7 @@ LOGICAL :: lexist
 !      of the Mechanism
 ! NV - The number of vectors in the mathematical representation
 ! NI - The number of independent (or input) parameters
+! NCOM - The number of common vector pairs
 ! NC - The number of common vectors in the mathematical representation
 ! NUMCAS - The number of cases (i.e. the number of mechanism positions analyzed)
 ! NMLINK - The number of moving links in the mechanism
