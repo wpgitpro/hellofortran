@@ -2,16 +2,28 @@
 ! Version: 0.1.2
 !
 PROGRAM helloworld
-USE mathModule
+! USE gnlink
+USE fame
 IMPLICIT NONE
-CHARACTER*20 :: modelname
+CHARACTER*20 :: modelname, mename
 INTEGER i, j
-INTEGER :: nl
+INTEGER :: nl, nv, maxv
 INTEGER, DIMENSION(4) :: loopseq
-INTEGER, DIMENSION(5) :: nv
 COMPLEX :: link(20), linka, linkb
-REAL, DIMENSION(5,5) :: model
+REAL, DIMENSION(250) :: model
 LOGICAL :: lexist
+
+real(kind=8), dimension(3) :: y,z
+
+COMMON /fe1/mename
+
+y = (/2., 3., 4./)
+call fsub(y,z)
+print *, "z = ",z
+
+!
+! MAXV - Maximum number of vectors in a loop
+!        Set to NV if single loop mechanism
 !
 ! Common block IS1
 !
@@ -23,6 +35,7 @@ LOGICAL :: lexist
 ! NC - The number of common vectors in the mathematical representation
 ! NUMCAS - The number of cases (i.e. the number of mechanism positions analyzed)
 ! NMLINK - The number of moving links in the mechanism
+!
 ! NN - The number of nodes in the mechanism. These are the
 !      points where vectors meet and the locations of the reaction forces
 !
@@ -46,7 +59,7 @@ LOGICAL :: lexist
 ! Common block RA3
 !
 !
-modelname = "model.dat"
+modelname = "model.dat" 
 linka = (3,4)
 linkb = (4,6)
 link(1) = linka + linkb
@@ -57,30 +70,35 @@ WRITE(*,*) "Number Of Mechanism Loops ?"
 READ(*,'(I1)') nl
 WRITE(*,*) nl
 WRITE(*,*) "Maximum number of vectors in any loop ?"
-READ(*,'(I1)') 
+READ(*,'(I1)') maxv
 do i = 1, nl
     WRITE(*,*) "Number of Links in Loop ?", i
-    READ(*,'(I1)') nv(i)
-    do j = 1, nv(i)
+    READ(*,'(I1)') nv
+    do j = 1, nv
         WRITE(*,*) "Length of link ", j, "?"
-        READ(*,*) model(i,j) 
-        WRITE(*,*) "Link ", j, " is ", model(i,j)
+        READ(*,*) model(j) 
+        WRITE(*,*) "Link ", j, " is ", model(j)
     end do
     WRITE(*,*) "Loop sequence (ex. 2 3 -4 -1)?"
     READ(*,*) loopseq 
 end do
+
+! Number of dependent variables equals 2 times the number of loops
+nd = nl * 2
+
 !
 ! Does model file already exist?
+!
 INQUIRE(FILE=modelname,EXIST=lexist)
 IF (.NOT. lexist) THEN
     OPEN(UNIT=9,FILE=modelname,STATUS='NEW',ACTION='WRITE')
     ! Output
     ! model(1) Number of vectors in get_model
     ! model(2) Number of Loops
-    ! model(3) Number of vectors in loop
+    ! model(3) Max vectors in loop
     ! model(4) ncom 
     ! model(5) ninput 
-    WRITE(9,*) nv(1), nl, nv(1), 0
+    WRITE(9,*) nv, nl, nv, 0, 0
     CLOSE(9,STATUS='KEEP')
 END IF
 !
@@ -101,11 +119,13 @@ SUBROUTINE check_model(model)
 END SUBROUTINE check_model
 
 subroutine grashof(lngth)
-! nv vectors
+! nv - number of vectors
 !
 REAL, INTENT(IN) :: lngth(4)
 REAL lmax,lmin,la,lb
-CHARACTER*18 mename
+CHARACTER*20 mename
+COMMON /fe1/mename
+
 lmax=amax1(lngth(1),lngth(3),lngth(2),lngth(4))
 lmin=amin1(lngth(1),lngth(3),lngth(2),lngth(4))
 if (lngth(1).ne.lmax.and.lngth(1).ne.lmin) then
