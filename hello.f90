@@ -2,24 +2,27 @@
 ! Version: 0.1.2
 !
 PROGRAM helloworld
-! USE gnlink
+USE gnlink
 USE fame
 IMPLICIT NONE
 CHARACTER*20 :: modelname, mename
+CHARACTER*1 :: prev
 INTEGER i, j
-INTEGER :: nl, nv, maxv
-INTEGER, DIMENSION(4) :: loopseq
+INTEGER :: nl, nv, maxv, nd
+INTEGER, DIMENSION(2,10) :: Loop_seq
 COMPLEX :: link(20), linka, linkb
-REAL, DIMENSION(250) :: model
+REAL, DIMENSION(250) :: MODEL
+REAL, DIMENSION(20) :: EXTRA
+
 LOGICAL :: lexist
 
 real(kind=8), dimension(3) :: y,z
 
 COMMON /fe1/mename
 
-y = (/2., 3., 4./)
-call fsub(y,z)
-print *, "z = ",z
+! y = (/2., 3., 4./)
+! call fsub(y,z)
+! print *, "z = ",z
 
 !
 ! MAXV - Maximum number of vectors in a loop
@@ -27,12 +30,15 @@ print *, "z = ",z
 !
 ! Common block IS1
 !
+! NV - The number of vectors in the mathematical representation
 ! NL - The number of vector loops in the mathematical representation
 !      of the Mechanism
-! NV - The number of vectors in the mathematical representation
-! NI - The number of independent (or input) parameters
-! NCOM - The number of common vector pairs
+! MODEL(3)
 ! NC - The number of common vectors in the mathematical representation
+! NI - The number of independent (or input) parameters
+!
+! NCOM - The number of common vector pairs
+
 ! NUMCAS - The number of cases (i.e. the number of mechanism positions analyzed)
 ! NMLINK - The number of moving links in the mechanism
 !
@@ -66,21 +72,45 @@ link(1) = linka + linkb
 PRINT *, "Hello World!"  
 PRINT *, "pi:", pi, "e:", e, "gamma:", gamma  
 PRINT *, link
+WRITE(*,*) 'Has the mechanism model been previously stored on file ? (Y or N) '
+READ(*,*) prev
+IF (prev .EQ. 'Y') THEN
+END IF
+! 
 WRITE(*,*) "Number Of Mechanism Loops ?"
 READ(*,'(I1)') nl
 WRITE(*,*) nl
-WRITE(*,*) "Maximum number of vectors in any loop ?"
-READ(*,'(I1)') maxv
+WRITE(*,*) "Number Of Vectors ?"
+READ(*,*) nv
+WRITE(*,*) nv
+IF (nl > 1) THEN
+   WRITE(*,*) "Maximum Number Of Vectors In Any Loop ?"
+   READ(*,*) maxv
+   WRITE(*,*) maxv
+   WRITE(*,*) "Total Number Of Common Vector Pairs ?"
+   READ(*,*) ncom
+   WRITE(*,*) ncom
+else
+   maxv = nv
+   nc = 1
+   numl = 2
+END IF
+! WRITE(*,*) "Maximum number of vectors in any loop ?"
+! READ(*,'(I1)') maxv
 do i = 1, nl
-    WRITE(*,*) "Number of Links in Loop ?", i
-    READ(*,'(I1)') nv
-    do j = 1, nv
-        WRITE(*,*) "Length of link ", j, "?"
-        READ(*,*) model(j) 
-        WRITE(*,*) "Link ", j, " is ", model(j)
-    end do
-    WRITE(*,*) "Loop sequence (ex. 2 3 -4 -1)?"
-    READ(*,*) loopseq 
+    ! WRITE(*,*) "Number of Links in Loop ?", i
+    ! READ(*,'(I1)') nv
+    ! do j = 1, nv
+    !     WRITE(*,*) "Length of link ", j, "?"
+    !     READ(*,*) model(j) 
+    !     WRITE(*,*) "Link ", j, " is ", model(j)
+    ! end do
+    !
+    ! THE LOOP SEQUENCE MUST BE SPECIFIED
+    !
+    WRITE(*,*) "Loop sequence for loop ", i, " (ex. 2 3 -4 -1) ?"
+    READ(*,'(I4)') Loop_seq(i,:)
+    WRITE(*,*) Loop_seq(i,:)
 end do
 
 ! Number of dependent variables equals 2 times the number of loops
@@ -88,6 +118,7 @@ nd = nl * 2
 
 !
 ! Does model file already exist?
+! Save it
 !
 INQUIRE(FILE=modelname,EXIST=lexist)
 IF (.NOT. lexist) THEN
@@ -102,6 +133,18 @@ IF (.NOT. lexist) THEN
     CLOSE(9,STATUS='KEEP')
 END IF
 !
+! Vector information is now accepted for the initial position
+!
+! do i=1, nv
+!   WRITE(*,*) 'For Vector Number ', I
+!   WRITE(*,*) 'Vector Length ?'
+!   READ(*,*) LEN(1,i)
+!   MODEL(5 + i) = LEN(1,i)
+!   WRITE(*,*) 'Vector Angle ?'
+!   READ(*,*) ANG(1,i)
+!   MODEL(5 + nv*i) = ANG(1,i)
+! end do
+
 WRITE(*,*) "End of program"
 STOP 0 
 END PROGRAM helloworld
@@ -179,9 +222,3 @@ WRITE (*,'(A,A,A)') 'MECH. TYPE = ',mename,' <ENTER>'
 read(5,*)
 return
 end
-
-
-
-
-
-

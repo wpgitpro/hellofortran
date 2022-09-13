@@ -1,5 +1,8 @@
 module fame
 
+implicit none
+
+
 contains 
 
 subroutine fsub(x,f)
