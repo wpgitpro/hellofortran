@@ -8,7 +8,7 @@ IMPLICIT NONE
 CHARACTER*20 :: modelname, mename
 CHARACTER*1 :: prev
 INTEGER i, j
-INTEGER :: nl, nv, maxv, nd
+INTEGER :: nl, nv, maxv, nd, ndepend, nc, ncom, ninput, numl
 INTEGER, DIMENSION(2,10) :: Loop_seq
 COMPLEX :: link(20), linka, linkb
 REAL, DIMENSION(250) :: MODEL
@@ -90,11 +90,20 @@ IF (nl > 1) THEN
    WRITE(*,*) "Total Number Of Common Vector Pairs ?"
    READ(*,*) ncom
    WRITE(*,*) ncom
+   nc = ncom
 else
    maxv = nv
    nc = 1
    numl = 2
 END IF
+WRITE(*,*) "Number Of Dependent Variables ?"
+READ(*,*) ndepend
+WRITE(*,*) ndepend
+nd = 2*nl  
+WRITE(*,*) "Number Of Inputs ?"
+READ(*,*) ninput 
+WRITE(*,*) ninput
+
 ! WRITE(*,*) "Maximum number of vectors in any loop ?"
 ! READ(*,'(I1)') maxv
 do i = 1, nl
@@ -129,7 +138,7 @@ IF (.NOT. lexist) THEN
     ! model(3) Max vectors in loop
     ! model(4) ncom 
     ! model(5) ninput 
-    WRITE(9,*) nv, nl, nv, 0, 0
+    WRITE(9,*) nv, nl, nv, ncom, ninput
     CLOSE(9,STATUS='KEEP')
 END IF
 !
