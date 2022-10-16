@@ -15,7 +15,7 @@ contains
 
    subroutine Polar_rect(llen,langle)
       real(kind=8), intent(in) :: llen,langle
-      real intent(out) :: link
+      ! real intent(out) :: link
       ! Don't do anything
    end subroutine Polar_rect
 
