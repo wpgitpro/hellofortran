@@ -1,7 +1,7 @@
 module fame
 
 implicit none
-
+real(kind=8) :: pi = 3.141592653589793d0
 
 contains 
 

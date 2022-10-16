@@ -77,9 +77,12 @@ READ(*,*) prev
 IF (prev .EQ. 'Y') THEN
 END IF
 ! 
-WRITE(*,*) "Number Of Mechanism Loops ?"
-READ(*,'(I1)') nl
+!
+! WRITE(*,*) "Number Of Mechanism Loops ?"
+! READ(*,'(I1)') nl
+nl = intval("Number of Mechanism Loops ?")
 WRITE(*,*) nl
+!
 WRITE(*,*) "Number Of Vectors ?"
 READ(*,*) nv
 WRITE(*,*) nv
@@ -151,7 +154,7 @@ END IF
 !   MODEL(5 + i) = LEN(1,i)
 !   WRITE(*,*) 'Vector Angle ?'
 !   READ(*,*) ANG(1,i)
-!   MODEL(5 + nv*i) = ANG(1,i)
+!   MODEL(5 + i + nv) = ANG(1,i)
 ! end do
 
 WRITE(*,*) "End of program"
