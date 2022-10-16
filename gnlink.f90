@@ -19,16 +19,4 @@ contains
       ! Don't do anything
    end subroutine Polar_rect
 
-   ! Get an integer value
-   ! Prompt <qtext>
-   !
-
-   integer function intval(qtext)
-      CHARACTER*80, intent(IN) :: qtext
-      INTEGER :: retval
-      print *, qtext
-      READ(*,*) retval
-      intval = retval
-   end function intval
-
 end module gnlink

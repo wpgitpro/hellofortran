@@ -78,10 +78,8 @@ READ(*,*) prev
 IF (prev .EQ. 'Y') THEN
 END IF
 ! 
-!
-! WRITE(*,*) "Number Of Mechanism Loops ?"
-! READ(*,'(I1)') nl
-nl = intval("Number of Mechanism Loops ?")
+WRITE(*,*) "Number Of Mechanism Loops ?"
+READ(*,'(I1)') nl
 WRITE(*,*) nl
 !
 WRITE(*,*) "Number Of Vectors ?"
