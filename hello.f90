@@ -8,6 +8,7 @@ IMPLICIT NONE
 CHARACTER*20 :: modelname, mename
 CHARACTER*1 :: prev
 INTEGER i, j
+INTEGER intval
 INTEGER :: nl, nv, maxv, nd, ndepend, nc, ncom, ninput, numl
 INTEGER, DIMENSION(2,10) :: Loop_seq
 COMPLEX :: link(20), linka, linkb
