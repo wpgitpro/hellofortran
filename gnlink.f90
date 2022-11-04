@@ -19,4 +19,10 @@ contains
       ! Don't do anything
    end subroutine Polar_rect
 
+   COMPLEX function cbar(llen, langle)
+      real(kind=8), intent(in) :: llen,langle
+      cbar = (llen*cos(langle),llen*sin(langle))
+   end function cbar
+
+
 end module gnlink
