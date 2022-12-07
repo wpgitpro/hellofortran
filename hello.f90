@@ -2,8 +2,6 @@
 ! Version: 0.1.2
 !
 PROGRAM helloworld
-USE gnlink
-USE fame
 IMPLICIT NONE
 CHARACTER*20 :: modelname, mename
 CHARACTER*1 :: prev
@@ -17,13 +15,9 @@ REAL, DIMENSION(20) :: EXTRA
 
 LOGICAL :: lexist
 
-real(kind=8), dimension(3) :: y,z
+REAL(kind=8), dimension(3) :: y,z
 
-COMMON /fe1/mename
-
-! y = (/2., 3., 4./)
-! call fsub(y,z)
-! print *, "z = ",z
+COMMON /fe1/ mename
 
 !
 ! MAXV - Maximum number of vectors in a loop
@@ -67,12 +61,6 @@ COMMON /fe1/mename
 !
 !
 modelname = "model.dat" 
-linka = (3,4)
-linkb = (4,6)
-link(1) = linka + linkb
-PRINT *, "Hello World!"  
-PRINT *, "pi:", pi, "e:", e, "gamma:", gamma  
-PRINT *, link
 WRITE(*,*) 'Has the mechanism model been previously stored on file ? (Y or N) '
 READ(*,*) prev
 IF (prev .EQ. 'Y') THEN
@@ -85,6 +73,7 @@ WRITE(*,*) nl
 WRITE(*,*) "Number Of Vectors ?"
 READ(*,*) nv
 WRITE(*,*) nv
+
 IF (nl > 1) THEN
    WRITE(*,*) "Maximum Number Of Vectors In Any Loop ?"
    READ(*,*) maxv
@@ -98,34 +87,53 @@ else
    nc = 1
    numl = 2
 END IF
+
 WRITE(*,*) "Number Of Dependent Variables ?"
 READ(*,*) ndepend
 WRITE(*,*) ndepend
 nd = 2*nl  
+
 WRITE(*,*) "Number Of Inputs ?"
 READ(*,*) ninput 
 WRITE(*,*) ninput
 
-! WRITE(*,*) "Maximum number of vectors in any loop ?"
-! READ(*,'(I1)') maxv
-do i = 1, nl
-    ! WRITE(*,*) "Number of Links in Loop ?", i
-    ! READ(*,'(I1)') nv
-    ! do j = 1, nv
-    !     WRITE(*,*) "Length of link ", j, "?"
-    !     READ(*,*) model(j) 
-    !     WRITE(*,*) "Link ", j, " is ", model(j)
-    ! end do
-    !
-    ! THE LOOP SEQUENCE MUST BE SPECIFIED
-    !
-    WRITE(*,*) "Loop sequence for loop ", i, " (ex. 2 3 -4 -1) ?"
-    READ(*,'(I4)') Loop_seq(i,:)
-    WRITE(*,*) Loop_seq(i,:)
+! Do the Main_sub part
+
+WRITE(*,*) "***** THE LOOP VECTOR SEQUENCES MUST BE SPFCIFIED *****"
+DO N = 1, NL
+  IF Nl = 1 THEN
+    Loop_seq(N,1) = Nv   
+  ELSE
+    WRITE(*,*) "FOR VECTOR LOOP NUMBER ", N
+    WRITE(*,*) "Enter The Number Of Vectors For This Loop"
+    READ(*,*) Loop_seq(N,1)
+  END IF
+  ! Update the Model information
+  Model(6+4*Ncom+(N-1)*(Maxv+1)+2*Nv+4*Nl) = Loop_seq(N,1)
+  WRITE(*,*) "Enter Each Vector Number And Sign In Order Of Sequence"
+  DO P=2, Loop_seq(N,1)+1
+    Write(*,*) "Vector ", P-1, "Sequence ", N
+    READ(*,*) Loop_seq(N,P)
+    Model(5+4*Ncom+(N-1)*(Maxv+1)+2*Nv+4*Nl+P) = Loop_seq(N,P)
+  END DO
+END DO
+
+! Vector information for the initial position
+!
+! Vector information is now accepted for the initial position
+!
+
+WRITE(*,*) "PLEASE SUPPLY THE FOLLOWING FOR EACH VECTOR, FOR THE INITIAL POSITION"
+do N=1, Nv
+   WRITE(*,*) 'For Vector Number ', N
+   WRITE(*,*) 'Vector Length ?'
+   READ(*,*) Len(1,N)
+   Model(5+N) = Len(1,N)
+   WRITE(*,*) 'Vector Angle ?'
+   READ(*,*) Ang(1,N)
+   Model(5+Nv+N) = Ang(1,N)
 end do
 
-! Number of dependent variables equals 2 times the number of loops
-nd = nl * 2
 
 !
 ! Does model file already exist?
@@ -143,22 +151,24 @@ IF (.NOT. lexist) THEN
     WRITE(9,*) nv, nl, nv, ncom, ninput
     CLOSE(9,STATUS='KEEP')
 END IF
+
 !
 ! Vector information is now accepted for the initial position
 !
 ! do i=1, nv
 !   WRITE(*,*) 'For Vector Number ', I
 !   WRITE(*,*) 'Vector Length ?'
-!   READ(*,*) LEN(1,i)
-!   MODEL(5 + i) = LEN(1,i)
+!   READ(*,*) Len(1,i)
 !   WRITE(*,*) 'Vector Angle ?'
-!   READ(*,*) ANG(1,i)
-!   MODEL(5 + i + nv) = ANG(1,i)
+!   READ(*,*) Ang(1,i)
 ! end do
 
 WRITE(*,*) "End of program"
 STOP 0 
 END PROGRAM helloworld
+
+SUBROUTINE Mod_sub
+END SUBROUTINE Mod_sub
 
 SUBROUTINE save_model(model)
     ! notes

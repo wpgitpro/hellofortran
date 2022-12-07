@@ -1,22 +1,15 @@
 C Steve's fourbar program
       PROGRAM fourbar
-      use appgraphics
       COMPLEX P(3),Wa,Wb,Za
       COMPLEX Zb
       REAL Alpha(3),BetaA(3),BetaB(3),lngths(6)
       REAL radius(2,6)
       INTEGER current,A,B,DONE,dev
-C      INTEGER start
-C
-      INTEGER::myscreen
+      INTEGER start
 C
       LOGICAL first
       PARAMETER (A=1,B=2,DONE=3)
       CHARACTER*5 clear,yesno*1,words,word2
-C
-C Add some windowing stuff
-      myscreen=initwindow(640,480,title="Testwindow",closeflag=.TRUE.)
-C      call closewindow(myscreen)
 C
 C     File name here - words
       words='words'
