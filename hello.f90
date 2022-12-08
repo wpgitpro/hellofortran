@@ -134,6 +134,37 @@ do N=1, Nv
    Model(5+Nv+N) = Ang(1,N)
 end do
 
+! Common Variables Are Identified In The Following Block
+
+IF Nl > 1 THEN
+  DO N=1, Ncom
+    WRITE(*,*) "COMMON VECTOR PAIRS MUST NOW BE IDENTIFIED"
+    WRITE(*,*) "Enter The Primary Vector Number"
+    READ(*,*) Com_ident(N,1)
+    Model(6+2*Nv+4*Nl+(N-1)*3)=Com_ident(N,1)
+    WRITE(*,*) "Enter The Common Vector Number"
+    READ(*,*) Com_ident(N,2)
+    Model(7+2*Nv+4*Nl+(N-1)*3)=Com_ident(N,1)  
+    WRITE(*,*) "Are The Variables Angles Or Lengths ? (A or L)"   
+    READ(*,*) Com(3)
+    WRITE(*,*) "Enter The Difference Value"
+    READ(*,*) Com_ident(3)
+    Model(8+2*Nv+4*Nl+(N-1)*3)=Com_ident(N,3)
+  END DO
+END IF
+
+WRITE(*,*) "PLEASE SUPPLY THE FOLLOWING INFORMATION FOR EACH DEPENDENT VARIABLE"
+DO N=1,Nd
+  WRITE(*,*) "FOR DEPENDENT VARIABLE NUMBER",N
+  WRITE(*,*) "Variable's Vector Number ?"
+  READ(*,*) Depend(N)
+  Model(5+2*Nv+N)=Depend(N)
+  WRITE(*,*) "Is The Variable An Angle Or A Length ?"
+END DO
+
+! Loop Connection Is Determined in SUB Loop_con
+
+! Insert code for Loop_con here
 
 !
 ! Does model file already exist?
