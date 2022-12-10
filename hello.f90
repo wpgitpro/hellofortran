@@ -9,6 +9,7 @@ INTEGER i, j
 INTEGER intval
 INTEGER :: nl, nv, maxv, nd, ndepend, nc, ncom, ninput, numl
 INTEGER, DIMENSION(2,10) :: Loop_seq
+INTEGER Count, S
 COMPLEX :: link(20), linka, linkb
 REAL, DIMENSION(250) :: MODEL
 REAL, DIMENSION(20) :: EXTRA
@@ -165,6 +166,20 @@ END DO
 ! Loop Connection Is Determined in SUB Loop_con
 
 ! Insert code for Loop_con here
+
+! Loop_con(Loop_con(*), Ls(*), Com_ident(*), Com$(*), Nl, Ncom)
+
+IF Nl > 1 THEN
+
+   Count = 1
+   S = 1
+
+   DO N=S, Nl
+   
+   END DO
+   
+END IF
+
 
 !
 ! Does model file already exist?
