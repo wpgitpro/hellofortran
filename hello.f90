@@ -7,12 +7,14 @@ CHARACTER*20 :: modelname, mename
 CHARACTER*1 :: prev
 INTEGER i, j
 INTEGER intval
-INTEGER :: nl, nv, maxv, nd, ndepend, nc, ncom, ninput, numl
+INTEGER :: nl, nv, maxv, nd, ndepend, nc, ncom, Ninput, numl, Paper
 INTEGER, DIMENSION(2,10) :: Loop_seq
 INTEGER Count, S
 COMPLEX :: link(20), linka, linkb
 REAL, DIMENSION(250) :: MODEL
 REAL, DIMENSION(20) :: EXTRA
+REAL Len, Ang, Real, Imag, E, Coeff, Inv_coeff, Const, Prod
+! REAL Input(5, Ninput), Input$(Ninput)
 
 LOGICAL :: lexist
 
@@ -61,6 +63,36 @@ COMMON /fe1/ mename
 ! Common block RA3
 !
 !
+
+! Input
+! 1 - Initial Displacement
+! 2 - Initial Velocity
+! 3 - Initial Acceleration
+! 4 - Motion Type (see below)
+! 5 - Vector Number of Input
+!
+! Input4
+! A or L for each input
+! Values for 1 to Ninput
+
+! Input types:
+! 1 - Constant Velocity
+! 2 - Constant Acceleration
+! 3 - User Defined
+! 4 - User Defined
+! 5 - User Defined 
+! 6 - User Defined
+! 7 - User Defined
+!
+! Com_ident (see CID above)
+!
+! Pva(3,Ninput)
+! 1 - Current Displacement
+! 2 - Current Velocity
+! 3 - Current Acceleration
+!
+! Res(1000)
+
 modelname = "model.dat" 
 WRITE(*,*) 'Has the mechanism model been previously stored on file ? (Y or N) '
 READ(*,*) prev
