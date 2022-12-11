@@ -5,16 +5,20 @@ PROGRAM helloworld
 IMPLICIT NONE
 CHARACTER*20 :: modelname, mename
 CHARACTER*1 :: prev
+CHARACTER*1 :: dtype
 INTEGER i, j
 INTEGER intval
-INTEGER :: nl, nv, maxv, nd, ndepend, nc, ncom, Ninput, numl, Paper
+INTEGER :: Nl, Nv, maxv, Nd, nDepend, Nc, Ncom, Ninput, numl, Paper
 INTEGER, DIMENSION(2,10) :: Loop_seq
 INTEGER Count, S
 COMPLEX :: link(20), linka, linkb
-REAL, DIMENSION(250) :: MODEL
-REAL, DIMENSION(20) :: EXTRA
+REAL, DIMENSION(250) :: Model
+REAL, DIMENSION(20) :: Extra
 REAL Len, Ang, Real, Imag, E, Coeff, Inv_coeff, Const, Prod
 ! REAL Input(5, Ninput), Input$(Ninput)
+!
+! Depend and Depend$ from GNLink
+INTEGER Depend(10), DependType(10)
 
 LOGICAL :: lexist
 
@@ -122,13 +126,13 @@ else
 END IF
 
 WRITE(*,*) "Number Of Dependent Variables ?"
-READ(*,*) ndepend
-WRITE(*,*) ndepend
+READ(*,*) Ndepend
+WRITE(*,*) Ndepend
 nd = 2*nl  
 
 WRITE(*,*) "Number Of Inputs ?"
-READ(*,*) ninput 
-WRITE(*,*) ninput
+READ(*,*) Ninput 
+WRITE(*,*) Ninput
 
 ! Do the Main_sub part
 
@@ -150,14 +154,11 @@ DO N = 1, NL
     Model(5+4*Ncom+(N-1)*(Maxv+1)+2*Nv+4*Nl+P) = Loop_seq(N,P)
   END DO
 END DO
-
-! Vector information for the initial position
 !
 ! Vector information is now accepted for the initial position
 !
-
 WRITE(*,*) "PLEASE SUPPLY THE FOLLOWING FOR EACH VECTOR, FOR THE INITIAL POSITION"
-do N=1, Nv
+DO N=1, Nv
    WRITE(*,*) 'For Vector Number ', N
    WRITE(*,*) 'Vector Length ?'
    READ(*,*) Len(1,N)
@@ -165,10 +166,10 @@ do N=1, Nv
    WRITE(*,*) 'Vector Angle ?'
    READ(*,*) Ang(1,N)
    Model(5+Nv+N) = Ang(1,N)
-end do
-
+END DO
+!
 ! Common Variables Are Identified In The Following Block
-
+!
 IF Nl > 1 THEN
   DO N=1, Ncom
     WRITE(*,*) "COMMON VECTOR PAIRS MUST NOW BE IDENTIFIED"
@@ -193,6 +194,15 @@ DO N=1,Nd
   READ(*,*) Depend(N)
   Model(5+2*Nv+N)=Depend(N)
   WRITE(*,*) "Is The Variable An Angle Or A Length ?"
+  READ(*,*) dtype
+  IF (dtype .EQ. "A") THEN
+     DependType(N) = 0
+  ELSE IF (dtype .EQ. "L") THEN
+     DependType(N) = 1
+  ELSE
+     DependType(N) = 0
+  END IF
+  Model(5+2*Nv+2*Nl+N)=DependType(N)
 END DO
 
 ! Loop Connection Is Determined in SUB Loop_con
@@ -230,23 +240,17 @@ IF (.NOT. lexist) THEN
     CLOSE(9,STATUS='KEEP')
 END IF
 
-!
-! Vector information is now accepted for the initial position
-!
-! do i=1, nv
-!   WRITE(*,*) 'For Vector Number ', I
-!   WRITE(*,*) 'Vector Length ?'
-!   READ(*,*) Len(1,i)
-!   WRITE(*,*) 'Vector Angle ?'
-!   READ(*,*) Ang(1,i)
-! end do
-
 WRITE(*,*) "End of program"
 STOP 0 
 END PROGRAM helloworld
 
 SUBROUTINE Mod_sub
 END SUBROUTINE Mod_sub
+
+SUBROUTINE Closure(Nd)
+   REAL, DIMENSION(Nd) :: E 
+END SUBROUTINE Closure
+
 
 SUBROUTINE save_model(model)
     ! notes
