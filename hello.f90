@@ -10,15 +10,17 @@ INTEGER i, j
 INTEGER intval
 INTEGER :: Nl, Nv, maxv, Nd, nDepend, Nc, Ncom, Ninput, numl, Paper
 INTEGER, DIMENSION(2,10) :: Loop_seq
-INTEGER Count, S
+INTEGER Count, S, N, P
 COMPLEX :: link(20), linka, linkb
 REAL, DIMENSION(250) :: Model
 REAL, DIMENSION(20) :: Extra
-REAL Len, Ang, Real, Imag, E, Coeff, Inv_coeff, Const, Prod
+! REAL Len, Ang, Real, Imag, E, Coeff, Inv_coeff, Const, Prod
+REAL Len(3,20), Ang(3,20)
 ! REAL Input(5, Ninput), Input$(Ninput)
 !
 ! Depend and Depend$ from GNLink
 INTEGER Depend(10), DependType(10)
+INTEGER Com_ident(10,3), Com(10)
 
 LOGICAL :: lexist
 
@@ -138,7 +140,7 @@ WRITE(*,*) Ninput
 
 WRITE(*,*) "***** THE LOOP VECTOR SEQUENCES MUST BE SPFCIFIED *****"
 DO N = 1, NL
-  IF Nl = 1 THEN
+  IF (Nl .EQ. 1) THEN
     Loop_seq(N,1) = Nv   
   ELSE
     WRITE(*,*) "FOR VECTOR LOOP NUMBER ", N
@@ -170,7 +172,7 @@ END DO
 !
 ! Common Variables Are Identified In The Following Block
 !
-IF Nl > 1 THEN
+IF (Nl .GT. 1) THEN
   DO N=1, Ncom
     WRITE(*,*) "COMMON VECTOR PAIRS MUST NOW BE IDENTIFIED"
     WRITE(*,*) "Enter The Primary Vector Number"
@@ -211,7 +213,7 @@ END DO
 
 ! Loop_con(Loop_con(*), Ls(*), Com_ident(*), Com$(*), Nl, Ncom)
 
-IF Nl > 1 THEN
+IF (Nl .GT. 1) THEN
 
    Count = 1
    S = 1
@@ -250,19 +252,6 @@ END SUBROUTINE Mod_sub
 SUBROUTINE Closure(Nd)
    REAL, DIMENSION(Nd) :: E 
 END SUBROUTINE Closure
-
-
-SUBROUTINE save_model(model)
-    ! notes
-END SUBROUTINE save_model
-
-SUBROUTINE get_model(model)
-    ! notes
-END SUBROUTINE get_model     
-
-SUBROUTINE check_model(model)
-    ! notes
-END SUBROUTINE check_model
 
 subroutine grashof(lngth)
 ! nv - number of vectors
