@@ -177,7 +177,7 @@ IF (Nl .GT. 1) THEN
     WRITE(*,*) "Are The Variables Angles Or Lengths ? (A or L)"   
     READ(*,*) Com(3)
     WRITE(*,*) "Enter The Difference Value"
-    READ(*,*) Com_ident(3)
+    READ(*,*) Com_ident(N,3)
     Model(8+2*Nv+4*Nl+(N-1)*3)=Com_ident(N,3)
   END DO
 END IF
@@ -188,7 +188,7 @@ DO N=1,Nd
   WRITE(*,*) "Variable's Vector Number ?"
   READ(*,*) Depend(N)
   Model(5+2*Nv+N)=Depend(N)
-  WRITE(*,*) "Is The Variable An Angle Or A Length ?"
+  WRITE(*,*) "Is The Variable An Angle Or A Length ? (A or L)"
   READ(*,*) dtype
   IF (dtype .EQ. "A") THEN
      DependType(N) = 0
@@ -262,12 +262,12 @@ DO N=1, Ninput
    END IF
    WRITE(*,*) "What Is The Vector Number Of The Variable?"
    READ(*,*) Input(5,N)
-   WRITE(*,*) "Is The Variable An Angle Or A Length? (A or L)
+   WRITE(*,*) "Is The Variable An Angle Or A Length? (A or L)"
    READ(*,*) InputType(N)
    WRITE(*,*) "Please Enter The Motion Type For This Variable (Andwer By Number Only)"
    READ(*,*) Input(4,N)
    IF (Input(4,N) .NE. 1) THEN
-      WRITE(*,*) " What Is The Variable's Initial Velocity, Vo?
+      WRITE(*,*) " What Is The Variable's Initial Velocity, Vo?"
       READ(*,*) Input(2,N)
    ELSE
       WRITE(*,*) "What Is the Variable's Constant Velocity?"
