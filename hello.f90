@@ -17,6 +17,7 @@ REAL, DIMENSION(20) :: Extra
 ! REAL Len, Ang, Real, Imag, E, Coeff, Inv_coeff, Const, Prod
 REAL Len(3,20), Ang(3,20)
 ! REAL Input(5, Ninput), Input$(Ninput)
+REAL Input(5,10), InputType(10), Pva(3,10)
 !
 ! Depend and Depend$ from GNLink
 INTEGER Depend(10), DependType(10)
@@ -81,15 +82,7 @@ COMMON /fe1/ mename
 ! A or L for each input
 ! Values for 1 to Ninput
 
-! Input types:
-! 1 - Constant Velocity
-! 2 - Constant Acceleration
-! 3 - User Defined
-! 4 - User Defined
-! 5 - User Defined 
-! 6 - User Defined
-! 7 - User Defined
-!
+
 ! Com_ident (see CID above)
 !
 ! Pva(3,Ninput)
@@ -225,6 +218,15 @@ IF (Nl .GT. 1) THEN
 END IF
 
 
+! Print Model CALL Print_model
+
+! Hard Copy?
+
+! Modify model?
+
+! Store model
+
+
 !
 ! Does model file already exist?
 ! Save it
@@ -241,6 +243,48 @@ IF (.NOT. lexist) THEN
     WRITE(9,*) nv, nl, nv, ncom, ninput
     CLOSE(9,STATUS='KEEP')
 END IF
+
+! Input types:
+! 1 - Constant Velocity
+! 2 - Constant Acceleration
+! 3 - User Defined
+! 4 - User Defined
+! 5 - User Defined 
+! 6 - User Defined
+! 7 - User Defined
+!
+
+DO N=1, Ninput
+   IF (Ninput .EQ. 1) THEN
+      WRITE(*,*) "FOR THE INPUT VARIABLE"
+   ELSE
+      WRITE(*,*) "FOR THE INPUT VARIABLE ", N
+   END IF
+   WRITE(*,*) "What Is The Vector Number Of The Variable?"
+   READ(*,*) Input(5,N)
+   WRITE(*,*) "Is The Variable An Angle Or A Length? (A or L)
+   READ(*,*) InputType(N)
+   WRITE(*,*) "Please Enter The Motion Type For This Variable (Andwer By Number Only)"
+   READ(*,*) Input(4,N)
+   IF (Input(4,N) .NE. 1) THEN
+      WRITE(*,*) " What Is The Variable's Initial Velocity, Vo?
+      READ(*,*) Input(2,N)
+   ELSE
+      WRITE(*,*) "What Is the Variable's Constant Velocity?"
+      READ(*,*) Pva(2,N)
+      Pva(3,N) = 0
+      Input(3,N) = 0
+   END IF
+   IF (Input(4,N) .NE. 2) THEN
+      WRITE(*,*) "What Is The Constant Acceleration Value?"
+      READ(*,*) Pva(3,N)
+   ELSE
+      WRITE(*,*) "What Is The Initial Acceleration Value?"
+      READ(*,*) Pva(3,N)
+   END IF
+   
+END DO
+
 
 WRITE(*,*) "End of program"
 STOP 0 
