@@ -285,6 +285,11 @@ DO N=1, Ninput
    
 END DO
 
+! Checking To See If All Inputs Are Constant Velocity
+
+WRITE(*,*) "DO YOU WANT TO INCREMENT THE INPUT VARIABLE, OR THE TIME? (I or T)"
+READ(*,*) Increment
+
 
 WRITE(*,*) "End of program"
 STOP 0 
