@@ -5,7 +5,7 @@ PROGRAM helloworld
 IMPLICIT NONE
 CHARACTER*20 :: modelname, mename
 CHARACTER*1 :: prev
-CHARACTER*1 :: dtype
+CHARACTER*1 :: dtype, Increment, Yorn
 INTEGER i, j
 INTEGER intval
 INTEGER :: Nl, Nv, maxv, Nd, nDepend, Nc, Ncom, Ninput, numl, Paper
@@ -22,6 +22,9 @@ REAL Input(5,10), InputType(10), Pva(3,10)
 ! Depend and Depend$ from GNLink
 INTEGER Depend(10), DependType(10)
 INTEGER Com_ident(10,3), Com(10)
+INTEGER Var_num
+REAL Var_increm, Var_final
+INTEGER Level
 
 LOGICAL :: lexist
 
@@ -289,6 +292,24 @@ END DO
 
 WRITE(*,*) "DO YOU WANT TO INCREMENT THE INPUT VARIABLE, OR THE TIME? (I or T)"
 READ(*,*) Increment
+
+WRITE(*,*) "WHICH INPUT VARIABLE DO YOU WANT TO INCREMENT? (Answer By Number Only)"
+READ(*,*) Var_num
+
+WRITE(*,*) "Increment Of Input Variable?"
+READ(*,*) Var_increm
+
+WRITE(*,*) "What Is The Final Variable Value?"
+READ(*,*) Var_final
+
+WRITE(*,*) "Do You Wish To Correct Any Of The Input Variable Information?"
+READ(*,*) Yorn
+
+Level = 0
+
+IF (Increment .EQ. "I") THEN
+
+END IF
 
 
 WRITE(*,*) "End of program"
