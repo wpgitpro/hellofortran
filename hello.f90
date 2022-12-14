@@ -267,8 +267,9 @@ DO N=1, Ninput
    READ(*,*) Input(5,N)
    WRITE(*,*) "Is The Variable An Angle Or A Length? (A or L)"
    READ(*,*) InputType(N)
-   WRITE(*,*) "Please Enter The Motion Type For This Variable (Andwer By Number Only)"
+   WRITE(*,*) "Please Enter The Motion Type For This Variable (Answer By Number Only)"
    READ(*,*) Input(4,N)
+   Input(4,N) = 1
    IF (Input(4,N) .NE. 1) THEN
       WRITE(*,*) " What Is The Variable's Initial Velocity, Vo?"
       READ(*,*) Input(2,N)
@@ -314,7 +315,7 @@ END IF
 
 WRITE(*,*) "End of program"
 STOP 0 
-END PROGRAM helloworld
+END PROGRAM hellowoputrld
 
 SUBROUTINE Mod_sub
 END SUBROUTINE Mod_sub
@@ -322,6 +323,12 @@ END SUBROUTINE Mod_sub
 SUBROUTINE Closure(Nd)
    REAL, DIMENSION(Nd) :: E 
 END SUBROUTINE Closure
+
+COMPLEX FUNCTION Polar_rect(inputlen, inputang)
+   REAL, INTENT(IN) :: inputlen, inputang
+   real, parameter :: pi = 3.1415927
+   Polar_rect = (inputlen * COS(inputang*pi/180), inputlen * SIN(inputang*pi/180))
+END FUNCTION
 
 subroutine grashof(lngth)
 ! nv - number of vectors
