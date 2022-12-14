@@ -326,8 +326,8 @@ END SUBROUTINE Closure
 
 COMPLEX FUNCTION Polar_rect(inputlen, inputang)
    REAL, INTENT(IN) :: inputlen, inputang
-   real, parameter :: pi = 3.1415927
-   Polar_rect = (inputlen * COS(inputang*pi/180), inputlen * SIN(inputang*pi/180))
+   REAL(kind=8), PARAMETER :: pi = 3.141592653589793d0
+   Polar_rect = cmplx(inputlen * COS(inputang*pi/180), inputlen * SIN(inputang*pi/180))
 END FUNCTION
 
 subroutine grashof(lngth)
