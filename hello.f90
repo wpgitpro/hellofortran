@@ -11,7 +11,7 @@ INTEGER intval
 INTEGER :: Nl, Nv, maxv, Nd, nDepend, Nc, Ncom, Ninput, numl, Paper
 INTEGER, DIMENSION(2,10) :: Loop_seq
 INTEGER Count, S, N, P
-COMPLEX :: link(20), linka, linkb
+COMPLEX :: linka
 REAL, DIMENSION(250) :: Model
 REAL, DIMENSION(20) :: Extra
 ! REAL Len, Ang, Real, Imag, E, Coeff, Inv_coeff, Const, Prod
@@ -26,11 +26,13 @@ INTEGER Var_num
 REAL Var_increm, Var_final
 INTEGER Level
 
-LOGICAL :: lexist
+LOGICAL :: lexist, ltest
 
 REAL(kind=8), dimension(3) :: y,z
 
 COMMON /fe1/ mename
+
+ltest = .TRUE.
 
 !
 ! MAXV - Maximum number of vectors in a loop
@@ -315,7 +317,7 @@ END IF
 
 WRITE(*,*) "End of program"
 STOP 0 
-END PROGRAM hellowoputrld
+END PROGRAM helloworld
 
 SUBROUTINE Mod_sub
 END SUBROUTINE Mod_sub
