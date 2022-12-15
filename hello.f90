@@ -30,9 +30,16 @@ LOGICAL :: lexist, ltest
 
 REAL(kind=8), dimension(3) :: y,z
 
+COMPLEX Polar_rect
+
 COMMON /fe1/ mename
 
 ltest = .TRUE.
+
+linka = Polar_rect(5.0,60.0)
+WRITE(*,*) linka
+
+IF (.NOT. ltest) THEN
 
 !
 ! MAXV - Maximum number of vectors in a loop
@@ -314,6 +321,7 @@ IF (Increment .EQ. "I") THEN
 
 END IF
 
+END IF
 
 WRITE(*,*) "End of program"
 STOP 0 
