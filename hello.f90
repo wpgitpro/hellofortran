@@ -14,10 +14,13 @@ INTEGER Count, S, N, P
 COMPLEX :: linka
 REAL, DIMENSION(250) :: Model
 REAL, DIMENSION(20) :: Extra
+
 ! REAL Len, Ang, Real, Imag, E, Coeff, Inv_coeff, Const, Prod
 REAL Len(3,20), Ang(3,20)
-! REAL Input(5, Ninput), Input$(Ninput)
+
+! REAL Input(5, Ninput), Inpunt$(Ninput)
 REAL Input(5,10), InputType(10), Pva(3,10)
+
 !
 ! Depend and Depend$ from GNLink
 INTEGER Depend(10), DependType(10)
