@@ -33,7 +33,7 @@ LOGICAL :: lexist, ltest
 
 REAL(kind=8), dimension(3) :: y,z
 
-COMPLEX Polar_rect
+COMPLEX Polar_rect, Init_Pos(20)
 
 COMMON /fe1/ mename
 
@@ -43,7 +43,8 @@ linka = Polar_rect(5.0,60.0)
 WRITE(*,*) linka
 
 IF (.NOT. ltest) THEN
-
+!
+! FAME
 !
 ! MAXV - Maximum number of vectors in a loop
 !        Set to NV if single loop mechanism
@@ -85,15 +86,16 @@ IF (.NOT. ltest) THEN
 ! Common block RA3
 !
 !
-
-! Input
+! GNLink
+!
+! Input(N,Ninput)
 ! 1 - Initial Displacement
 ! 2 - Initial Velocity
 ! 3 - Initial Acceleration
 ! 4 - Motion Type (see below)
 ! 5 - Vector Number of Input
 !
-! Input4
+! Input$
 ! A or L for each input
 ! Values for 1 to Ninput
 
@@ -176,6 +178,8 @@ DO N=1, Nv
    WRITE(*,*) 'Vector Angle ?'
    READ(*,*) Ang(1,N)
    Model(5+Nv+N) = Ang(1,N)
+   ! Set initial position in complex coordinates
+   Init_pos(N) = Polar_rect(Len(1,N), Ang(1,N))
 END DO
 !
 ! Common Variables Are Identified In The Following Block
@@ -259,7 +263,8 @@ IF (.NOT. lexist) THEN
     CLOSE(9,STATUS='KEEP')
 END IF
 
-! Input types:
+! Input variable motions:
+!
 ! 1 - Constant Velocity
 ! 2 - Constant Acceleration
 ! 3 - User Defined
@@ -270,6 +275,17 @@ END IF
 !
 
 DO N=1, Ninput
+   IF (N .EQ. 1) THEN
+      WRITE(*,*) "THE FOLLOWING INPUT VARIABLE MOTIONS ARE AVAILABLE:"
+      WRITE(*,*) "         MOTION NUMBER               MOTION TYPE   "
+      WRITE(*,*) "               1                     Constant Velocity"
+      WRITE(*,*) "               2                     Constant Acceleration"
+      WRITE(*,*) "               3                     User Defined Function #1"    
+      WRITE(*,*) "               4                     User Defined Function #2"      
+      WRITE(*,*) "               5                     User Defined Function #3"      
+      WRITE(*,*) "               6                     User Defined Function #4"
+      WRITE(*,*) "               7                     User Defined Function #5"
+   END IF
    IF (Ninput .EQ. 1) THEN
       WRITE(*,*) "FOR THE INPUT VARIABLE"
    ELSE
@@ -298,7 +314,11 @@ DO N=1, Ninput
       WRITE(*,*) "What Is The Initial Acceleration Value?"
       READ(*,*) Pva(3,N)
    END IF
-   
+   IF (InputType(N) .EQ. "L") THEN
+      Input(1,N) = Len(1,Input(5,N))
+   ELSE
+      Input(1,N) = Ang(1,Input(5,N))
+   END IF
 END DO
 
 ! Checking To See If All Inputs Are Constant Velocity
