@@ -14,6 +14,7 @@ INTEGER Count, S, N, P
 COMPLEX :: linka
 REAL, DIMENSION(250) :: Model
 REAL, DIMENSION(20) :: Extra
+REAL, DIMENSTON(10) :: lngth
 
 ! REAL Len, Ang, Real, Imag, E, Coeff, Inv_coeff, Const, Prod
 REAL Len(3,20), Ang(3,20)
@@ -363,7 +364,7 @@ COMPLEX FUNCTION Polar_rect(inputlen, inputang)
    Polar_rect = cmplx(inputlen * COS(inputang*pi/180), inputlen * SIN(inputang*pi/180))
 END FUNCTION
 
-subroutine grashof(lngth)
+SUBROUTINE grashof(lngth)
 ! nv - number of vectors
 !
 REAL, INTENT(IN) :: lngth(4)
