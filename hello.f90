@@ -99,16 +99,28 @@ IF (.NOT. ltest) THEN
 ! Input$
 ! A or L for each input
 ! Values for 1 to Ninput
-
-
-! Com_ident (see CID above)
 !
-! Pva(3,Ninput)
+! Com_ident(Nc, 3) Com$(Nc) (see CID above)
+!
+! Pva(3,Ninput) current values for input variables
 ! 1 - Current Displacement
 ! 2 - Current Velocity
 ! 3 - Current Acceleration
 !
 ! Res(1000)
+!
+! E(Nd)
+! Coeff(Nd, Nd)
+! Inv_coeff(Nd, Nd)
+!
+! Const(Nd, 1)
+! Prod(Nd, 1)
+! Loop_seq(Nl, Maxv+1)
+! Depend(Nd) Depend$(Nd)
+! Input(5, Ninput) Input4(Ninput)
+!
+
+
 
 modelname = "model.dat" 
 WRITE(*,*) 'Has the mechanism model been previously stored on file ? (Y or N) '
