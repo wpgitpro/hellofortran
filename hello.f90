@@ -16,8 +16,10 @@ REAL, DIMENSION(250) :: Model
 REAL, DIMENSION(20) :: Extra
 REAL, DIMENSTON(10) :: lngth
 
-! REAL Len, Ang, Real, Imag, E, Coeff, Inv_coeff, Const, Prod
+! REAL Len, Ang
 REAL Len(3,20), Ang(3,20)
+
+! , Real, Imag, E, Coeff, Inv_coeff, Const, Prod
 
 ! REAL Input(5, Ninput), Inpunt$(Ninput)
 REAL Input(5,10), InputType(10), Pva(3,10)
@@ -161,7 +163,7 @@ WRITE(*,*) Ninput
 
 ! Do the Main_sub part
 
-WRITE(*,*) "***** THE LOOP VECTOR SEQUENCES MUST BE SPFCIFIED *****"
+WRITE(*,*) "***** THE LOOP VECTOR SEQUENCES MUST BE SPECIFIED *****"
 DO N = 1, NL
   IF (Nl .EQ. 1) THEN
     Loop_seq(N,1) = Nv   
