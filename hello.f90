@@ -196,6 +196,7 @@ DO N=1, Nv
 END DO
 !
 ! Common Variables Are Identified In The Following Block
+! (For Multi-Loop Mechanisms Only)
 !
 IF (Nl .GT. 1) THEN
   DO N=1, Ncom
@@ -213,6 +214,10 @@ IF (Nl .GT. 1) THEN
     Model(8+2*Nv+4*Nl+(N-1)*3)=Com_ident(N,3)
   END DO
 END IF
+
+!
+! There are two dependent variables for each mechanism loop. Course 25.212
+!
 
 WRITE(*,*) "PLEASE SUPPLY THE FOLLOWING INFORMATION FOR EACH DEPENDENT VARIABLE"
 DO N=1,Nd
