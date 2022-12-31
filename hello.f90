@@ -8,7 +8,7 @@ CHARACTER*1 :: prev
 CHARACTER*1 :: dtype, Increment, Yorn
 INTEGER i, j
 INTEGER intval
-INTEGER :: Nl, Nv, maxv, Nd, nDepend, Nc, Ncom, Ninput, numl, Paper
+INTEGER :: Nl, Nv, maxv, Nd, Ndepend, Nc, Ncom, Ninput, numl, Paper
 INTEGER, DIMENSION(2,10) :: Loop_seq
 INTEGER Count, S, N, P
 COMPLEX :: linka
@@ -131,12 +131,12 @@ IF (prev .EQ. 'Y') THEN
 END IF
 ! 
 WRITE(*,*) "Number Of Mechanism Loops ?"
-READ(*,'(I1)') nl
-WRITE(*,*) nl
+READ(*,'(I1)') Nl
+WRITE(*,*) Nl
 !
 WRITE(*,*) "Number Of Vectors ?"
-READ(*,*) nv
-WRITE(*,*) nv
+READ(*,*) Nv
+WRITE(*,*) Nv
 
 IF (nl > 1) THEN
    WRITE(*,*) "Maximum Number Of Vectors In Any Loop ?"
@@ -155,13 +155,15 @@ END IF
 WRITE(*,*) "Number Of Dependent Variables ?"
 READ(*,*) Ndepend
 WRITE(*,*) Ndepend
-nd = 2*nl  
+Nd = 2*nl  
 
 WRITE(*,*) "Number Of Inputs ?"
 READ(*,*) Ninput 
 WRITE(*,*) Ninput
 
 ! Do the Main_sub part
+! The loop sequences are stored in Loop_seq with P+1 entries for each loop
+!
 
 WRITE(*,*) "***** THE LOOP VECTOR SEQUENCES MUST BE SPECIFIED *****"
 DO N = 1, NL
@@ -181,9 +183,11 @@ DO N = 1, NL
     Model(5+4*Ncom+(N-1)*(Maxv+1)+2*Nv+4*Nl+P) = Loop_seq(N,P)
   END DO
 END DO
+
 !
 ! Vector information is now accepted for the initial position
 !
+
 WRITE(*,*) "PLEASE SUPPLY THE FOLLOWING FOR EACH VECTOR, FOR THE INITIAL POSITION"
 DO N=1, Nv
    WRITE(*,*) 'For Vector Number ', N
@@ -196,10 +200,12 @@ DO N=1, Nv
    ! Set initial position in complex coordinates
    Init_pos(N) = Polar_rect(Len(1,N), Ang(1,N))
 END DO
+
 !
 ! Common Variables Are Identified In The Following Block
 ! (For Multi-Loop Mechanisms Only)
 !
+
 IF (Nl .GT. 1) THEN
   DO N=1, Ncom
     WRITE(*,*) "COMMON VECTOR PAIRS MUST NOW BE IDENTIFIED"
