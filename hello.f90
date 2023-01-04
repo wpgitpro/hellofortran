@@ -12,9 +12,9 @@ INTEGER :: Nl, Nv, maxv, Nd, Ndepend, Nc, Ncom, Ninput, numl, Paper
 INTEGER, DIMENSION(2,10) :: Loop_seq
 INTEGER Count, S, N, P
 COMPLEX :: linka
-REAL, DIMENSION(250) :: Model
-REAL, DIMENSION(20) :: Extra
-REAL, DIMENSTON(10) :: lngth
+REAL  :: Model(250)
+REAL :: Extra(20)
+REAL :: lngth(10)
 
 ! REAL Len, Ang
 REAL Len(3,20), Ang(3,20)
@@ -22,7 +22,8 @@ REAL Len(3,20), Ang(3,20)
 ! , Real, Imag, E, Coeff, Inv_coeff, Const, Prod
 
 ! REAL Input(5, Ninput), Inpunt$(Ninput)
-REAL Input(5,10), InputType(10), Pva(3,10)
+REAL Input(5,10), Pva(3,10)
+CHARACTER*1 :: InputType(10)
 
 !
 ! Depend and Depend$ from GNLink
