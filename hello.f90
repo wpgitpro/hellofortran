@@ -342,9 +342,9 @@ DO N=1, Ninput
       READ(*,*) Pva(3,N)
    END IF
    IF (InputType(N) .EQ. "L") THEN
-      Input(1,N) = Len(1,Input(5,N))
+      Input(1,N) = Len(1,INT(Input(5,N)))
    ELSE
-      Input(1,N) = Ang(1,Input(5,N))
+      Input(1,N) = Ang(1,INT(Input(5,N)))
    END IF
 END DO
 
