@@ -37,7 +37,7 @@ LOGICAL :: lexist, ltest
 
 REAL(kind=8), dimension(3) :: y,z
 
-COMPLEX Polar_rect, Init_Pos(20)
+COMPLEX Polar_rect, Init_Pos(20), E
 
 COMMON /fe1/ mename
 
