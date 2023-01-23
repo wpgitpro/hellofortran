@@ -12,7 +12,7 @@ INTEGER :: Nl, Nv, maxv, Nd, Ndepend, Nc, Ncom, Ninput, numl, Paper
 INTEGER, DIMENSION(2,10) :: Loop_seq
 INTEGER Count, S, N, P
 COMPLEX :: linka
-REAL  :: Model(250)
+REAL :: Model(250)
 REAL :: Extra(20)
 REAL :: lngth(10)
 
@@ -230,7 +230,7 @@ END IF
 
 WRITE(*,*) "PLEASE SUPPLY THE FOLLOWING INFORMATION FOR EACH DEPENDENT VARIABLE"
 DO N=1,Nd
-  WRITE(*,*) "FOR DEPENDENT VARIABLE NUMBER",N
+  WRITE(*,*) "FOR DEPENDENT VARIABLE NUMBER", N
   WRITE(*,*) "Variable's Vector Number ?"
   READ(*,*) Depend(N)
   Model(5+2*Nv+N)=Depend(N)
