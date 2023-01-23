@@ -380,8 +380,10 @@ END PROGRAM helloworld
 SUBROUTINE Mod_sub
 END SUBROUTINE Mod_sub
 
-SUBROUTINE Closure(Nd)
+SUBROUTINE Closure(Nd, Loop_seq)
+   INTEGER :: Nd
    REAL, DIMENSION(Nd) :: E 
+   INTEGER, DIMENSION(2,10) :: Loop_seq
 END SUBROUTINE Closure
 
 COMPLEX FUNCTION Polar_rect(inputlen, inputang)
