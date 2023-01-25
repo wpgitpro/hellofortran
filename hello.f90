@@ -5,7 +5,7 @@ PROGRAM helloworld
 IMPLICIT NONE
 CHARACTER*20 :: modelname, mename
 CHARACTER*1 :: prev
-CHARACTER*1 :: dtype, Increment, Yorn
+CHARACTER*1 :: mtype, Increment, Yorn
 INTEGER i, j
 INTEGER intval
 INTEGER :: Nl, Nv, maxv, Nd, Ndepend, Nc, Ncom, Ninput, numl, Paper
@@ -27,7 +27,12 @@ CHARACTER*1 :: InputType(10)
 
 !
 ! Depend and Depend$ from GNLink
-INTEGER Depend(10), DependType(10)
+! Depend(10,N) where N is
+! 1 - Vector Number
+! 2 - Angle (0) or Length (1)
+!
+INTEGER Depend(10,2)
+
 INTEGER Com_ident(10,3), Com(10)
 INTEGER Var_num
 REAL Var_increm, Var_final
@@ -232,18 +237,18 @@ WRITE(*,*) "PLEASE SUPPLY THE FOLLOWING INFORMATION FOR EACH DEPENDENT VARIABLE"
 DO N=1,Nd
   WRITE(*,*) "FOR DEPENDENT VARIABLE NUMBER", N
   WRITE(*,*) "Variable's Vector Number ?"
-  READ(*,*) Depend(N)
-  Model(5+2*Nv+N)=Depend(N)
+  READ(*,*) Depend(N,1)
+  Model(5+2*Nv+N)=Depend(N,1)
   WRITE(*,*) "Is The Variable An Angle Or A Length ? (A or L)"
-  READ(*,*) dtype
-  IF (dtype .EQ. "A") THEN
-     DependType(N) = 0
-  ELSE IF (dtype .EQ. "L") THEN
-     DependType(N) = 1
+  READ(*,*) mtype
+  IF (mtype .EQ. "A") THEN
+     Depend(N,2) = 0
+  ELSE IF (mtype .EQ. "L") THEN
+     Depend(N,2) = 1
   ELSE
-     DependType(N) = 0
+     Depend(N,2) = 0
   END IF
-  Model(5+2*Nv+2*Nl+N)=DependType(N)
+  Model(5+2*Nv+2*Nl+N)=Depend(N,2)
 END DO
 
 ! Loop Connection Is Determined in SUB Loop_con
@@ -319,33 +324,42 @@ DO N=1, Ninput
       WRITE(*,*) "FOR THE INPUT VARIABLE ", N
    END IF
    WRITE(*,*) "What Is The Vector Number Of The Variable?"
-   READ(*,*) Input(5,N)
+   READ(*,*) Input(N,1)
    WRITE(*,*) "Is The Variable An Angle Or A Length? (A or L)"
-   READ(*,*) InputType(N)
+   READ(*,*) mtype
+   IF (mtype .EQ. "A") THEN
+     Input(N,2) = 0
+   ELSE IF (mtype .EQ. "L") THEN
+      Input(N,2) = 1
+   ELSE
+      Input(N,2) = 0
+   END IF
    WRITE(*,*) "Please Enter The Motion Type For This Variable (Answer By Number Only)"
-   READ(*,*) Input(4,N)
-   Input(4,N) = 1
-   IF (Input(4,N) .NE. 1) THEN
-      WRITE(*,*) " What Is The Variable's Initial Velocity, Vo?"
-      READ(*,*) Input(2,N)
-   ELSE
-      WRITE(*,*) "What Is the Variable's Constant Velocity?"
-      READ(*,*) Pva(2,N)
-      Pva(3,N) = 0
-      Input(3,N) = 0
-   END IF
-   IF (Input(4,N) .NE. 2) THEN
-      WRITE(*,*) "What Is The Constant Acceleration Value?"
-      READ(*,*) Pva(3,N)
-   ELSE
-      WRITE(*,*) "What Is The Initial Acceleration Value?"
-      READ(*,*) Pva(3,N)
-   END IF
-   IF (InputType(N) .EQ. "L") THEN
-      Input(1,N) = Len(1,INT(Input(5,N)))
-   ELSE
-      Input(1,N) = Ang(1,INT(Input(5,N)))
-   END IF
+   READ(*,*) Input(N,3)
+   
+   ! Input(4,N) = 1
+   ! IF (Input(4,N) .NE. 1) THEN
+   !    WRITE(*,*) " What Is The Variable's Initial Velocity, Vo?"
+   !    READ(*,*) Input(2,N)
+   ! ELSE
+   !    WRITE(*,*) "What Is the Variable's Constant Velocity?"
+   !    READ(*,*) Pva(2,N)
+   !    Pva(3,N) = 0
+   !    Input(3,N) = 0
+   ! END IF
+   ! IF (Input(4,N) .NE. 2) THEN
+   !    WRITE(*,*) "What Is The Constant Acceleration Value?"
+   !    READ(*,*) Pva(3,N)
+   ! ELSE
+   !    WRITE(*,*) "What Is The Initial Acceleration Value?"
+   !    READ(*,*) Pva(3,N)
+   ! END IF
+   ! IF (InputType(N) .EQ. "L") THEN
+   !    Input(1,N) = Len(1,INT(Input(5,N)))
+   ! ELSE
+   !    Input(1,N) = Ang(1,INT(Input(5,N)))
+   ! END IF
+   
 END DO
 
 ! Checking To See If All Inputs Are Constant Velocity
