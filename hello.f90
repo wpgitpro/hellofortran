@@ -184,9 +184,9 @@ DO N = 1, NL
   Model(6+4*Ncom+(N-1)*(Maxv+1)+2*Nv+4*Nl) = Loop_seq(N,1)
   WRITE(*,*) "Enter Each Vector Number And Sign In Order Of Sequence"
   DO P=2, Loop_seq(N,1)+1
-    Write(*,*) "Vector ", P-1, "Sequence ", N
-    READ(*,*) Loop_seq(N,P)
-    Model(5+4*Ncom+(N-1)*(Maxv+1)+2*Nv+4*Nl+P) = Loop_seq(N,P)
+     Write(*,*) "Vector ", P-1, "Sequence ", N
+     READ(*,*) Loop_seq(N,P)
+     Model(5+4*Ncom+(N-1)*(Maxv+1)+2*Nv+4*Nl+P) = Loop_seq(N,P)
   END DO
 END DO
 
@@ -364,20 +364,22 @@ END DO
 
 ! Checking To See If All Inputs Are Constant Velocity
 
-WRITE(*,*) "DO YOU WANT TO INCREMENT THE INPUT VARIABLE, OR THE TIME? (I or T)"
-READ(*,*) Increment
+! WRITE(*,*) "DO YOU WANT TO INCREMENT THE INPUT VARIABLE, OR THE TIME? (I or T)"
+! READ(*,*) Increment
 
-WRITE(*,*) "WHICH INPUT VARIABLE DO YOU WANT TO INCREMENT? (Answer By Number Only)"
-READ(*,*) Var_num
+! WRITE(*,*) "WHICH INPUT VARIABLE DO YOU WANT TO INCREMENT? (Answer By Number Only)"
+! READ(*,*) Var_num
 
-WRITE(*,*) "Increment Of Input Variable?"
-READ(*,*) Var_increm
+! WRITE(*,*) "Increment Of Input Variable?"
+! READ(*,*) Var_increm
 
-WRITE(*,*) "What Is The Final Variable Value?"
-READ(*,*) Var_final
+! WRITE(*,*) "What Is The Final Variable Value?"
+! READ(*,*) Var_final
 
-WRITE(*,*) "Do You Wish To Correct Any Of The Input Variable Information?"
-READ(*,*) Yorn
+! WRITE(*,*) "Do You Wish To Correct Any Of The Input Variable Information?"
+! READ(*,*) Yorn
+
+CALL Closure(Loop_seq, Init_pos)
 
 Level = 0
 
@@ -394,10 +396,21 @@ END PROGRAM helloworld
 SUBROUTINE Mod_sub
 END SUBROUTINE Mod_sub
 
-SUBROUTINE Closure(Nd, Loop_seq)
-   INTEGER :: Nd
-   REAL, DIMENSION(Nd) :: E 
+SUBROUTINE Closure(Loop_seq, Init_pos)
    INTEGER, DIMENSION(2,10) :: Loop_seq
+   INTEGER :: Loop, Vec, Dir
+   COMPLEX :: E, Init_pos
+   Loop = 1
+   DO N=2, Loop_seq(Loop,1)+1
+      Vec = ABS(Loop_seq(1,N))
+      IF Loop_seq(1,N) .GT. 0 THEN
+         Dir = 1
+      ELSE
+         Dir = -1
+      END IF
+      E = E + Init_pos(Vec)*Dir
+   END DO
+   WRITE(*,*) E
 END SUBROUTINE Closure
 
 COMPLEX FUNCTION Polar_rect(inputlen, inputang)
