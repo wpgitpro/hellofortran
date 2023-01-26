@@ -21,7 +21,7 @@ REAL Len(3,20), Ang(3,20)
 
 ! , Real, Imag, E, Coeff, Inv_coeff, Const, Prod
 
-! REAL Input(5, Ninput), Inpunt$(Ninput)
+! REAL Input(5, Ninput), Input$(Ninput)
 REAL Input(5,10), Pva(3,10)
 CHARACTER*1 :: InputType(10)
 
