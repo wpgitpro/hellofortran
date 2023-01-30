@@ -41,8 +41,9 @@ INTEGER Level
 LOGICAL :: lexist, ltest
 
 REAL(kind=8), dimension(3) :: y,z
+REAL(kind=8) :: E(10)
 
-COMPLEX Polar_rect, Init_Pos(20), E
+COMPLEX Polar_rect, Init_Pos(20), Ec
 
 COMMON /fe1/ mename
 
@@ -399,7 +400,7 @@ END SUBROUTINE Mod_sub
 SUBROUTINE Closure(Loop_seq, Init_pos)
    INTEGER, DIMENSION(2,10) :: Loop_seq
    INTEGER :: Loop, Vec, Dir
-   COMPLEX :: E, Init_pos
+   COMPLEX :: Ec, Init_pos
    Loop = 1
    DO N=2, Loop_seq(Loop,1)+1
       Vec = ABS(Loop_seq(1,N))
@@ -408,9 +409,9 @@ SUBROUTINE Closure(Loop_seq, Init_pos)
       ELSE
          Dir = -1
       END IF
-      E = E + Init_pos(Vec)*Dir
+      Ec = Ec + Init_pos(Vec)*Dir
    END DO
-   WRITE(*,*) E
+   WRITE(*,*) Ec
 END SUBROUTINE Closure
 
 COMPLEX FUNCTION Polar_rect(inputlen, inputang)
