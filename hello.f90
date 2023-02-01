@@ -421,8 +421,6 @@ COMPLEX FUNCTION Polar_rect(inputlen, inputang)
 END FUNCTION
 
 SUBROUTINE grashof(lngth)
-! nv - number of vectors
-!
 REAL, INTENT(IN) :: lngth(4)
 REAL lmax,lmin,la,lb
 CHARACTER*20 mename
