@@ -401,7 +401,7 @@ SUBROUTINE Closure(Loop_seq, Init_pos, Loop)
    INTEGER, DIMENSION(2,10), INTENT(IN) :: Loop_seq
    INTEGER, INTENT(IN) :: Loop
    COMPLEX, DIMENSION(20), INTENT(IN) :: Init_pos
-   INTEGER :: Loop, Vec, Dir
+   INTEGER :: Vec, Dir
    COMPLEX :: Ec
    ! Loop = 1
    DO N=2, Loop_seq(Loop,1)+1
