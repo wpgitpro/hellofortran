@@ -380,7 +380,7 @@ END DO
 ! WRITE(*,*) "Do You Wish To Correct Any Of The Input Variable Information?"
 ! READ(*,*) Yorn
 
-CALL Closure(Loop_seq, Init_pos)
+CALL Closure(Loop_seq, Init_pos, 1)
 
 Level = 0
 
@@ -397,14 +397,16 @@ END PROGRAM helloworld
 SUBROUTINE Mod_sub
 END SUBROUTINE Mod_sub
 
-SUBROUTINE Closure(Loop_seq, Init_pos)
-   INTEGER, DIMENSION(2,10) :: Loop_seq
+SUBROUTINE Closure(Loop_seq, Init_pos, Loop)
+   INTEGER, DIMENSION(2,10), INTENT(IN) :: Loop_seq
+   INTEGER, INTENT(IN) :: Loop
+   COMPLEX, DIMENSION(20), INTENT(IN) :: Init_pos
    INTEGER :: Loop, Vec, Dir
-   COMPLEX :: Ec, Init_pos
-   Loop = 1
+   COMPLEX :: Ec
+   ! Loop = 1
    DO N=2, Loop_seq(Loop,1)+1
       Vec = ABS(Loop_seq(1,N))
-      IF Loop_seq(1,N) .GT. 0 THEN
+      IF (Loop_seq(1,N) .GT. 0) THEN
          Dir = 1
       ELSE
          Dir = -1
