@@ -11,7 +11,6 @@ INTEGER intval
 INTEGER :: Nl, Nv, maxv, Nd, Ndepend, Nc, Ncom, Ninput, numl, Paper
 INTEGER, DIMENSION(2,10) :: Loop_seq
 INTEGER Count, S, N, P
-COMPLEX :: linka
 REAL :: Model(250)
 REAL :: Extra(20)
 REAL :: lngth(10)
@@ -380,7 +379,7 @@ END DO
 ! WRITE(*,*) "Do You Wish To Correct Any Of The Input Variable Information?"
 ! READ(*,*) Yorn
 
-CALL Closure(Loop_seq, Init_pos, 1)
+CALL Closure(Loop_seq, Init_pos, 1, Ec)
 
 Level = 0
 
@@ -397,12 +396,13 @@ END PROGRAM helloworld
 SUBROUTINE Mod_sub
 END SUBROUTINE Mod_sub
 
-SUBROUTINE Closure(Loop_seq, Init_pos, Loop)
+SUBROUTINE Closure(Loop_seq, Init_pos, Loop, Ec)
    INTEGER, DIMENSION(2,10), INTENT(IN) :: Loop_seq
    INTEGER, INTENT(IN) :: Loop
    COMPLEX, DIMENSION(20), INTENT(IN) :: Init_pos
    INTEGER :: Vec, Dir
-   COMPLEX :: Ec
+   COMPLEX, INTENT(INOUT) :: Ec
+   Ec = (0.0,0.0)
    ! Loop = 1
    DO N=2, Loop_seq(Loop,1)+1
       Vec = ABS(Loop_seq(1,N))
