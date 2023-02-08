@@ -6,7 +6,7 @@ IMPLICIT NONE
 CHARACTER*20 :: modelname, mename
 CHARACTER*1 :: prev
 CHARACTER*1 :: mtype, Increment, Yorn
-INTEGER i, j
+INTEGER i, j, C
 INTEGER intval
 INTEGER :: Nl, Nv, maxv, Nd, Ndepend, Nc, Ncom, Ninput, numl, Paper
 INTEGER, DIMENSION(2,10) :: Loop_seq
@@ -324,7 +324,7 @@ DO N=1, Ninput
       WRITE(*,*) "FOR THE INPUT VARIABLE ", N
    END IF
    WRITE(*,*) "What Is The Vector Number Of The Variable?"
-   READ(*,*) Input(N,1)
+   READ(*,*) Input(N,5)
    WRITE(*,*) "Is The Variable An Angle Or A Length? (A or L)"
    READ(*,*) mtype
    IF (mtype .EQ. "A") THEN
@@ -370,7 +370,7 @@ END DO
 ! WRITE(*,*) "WHICH INPUT VARIABLE DO YOU WANT TO INCREMENT? (Answer By Number Only)"
 ! READ(*,*) Var_num
 
-! WRITE(*,*) "Increment Of Input Variable?"
+! WRITE(*,*) "Increment Of Input Variable?" 
 ! READ(*,*) Var_increm
 
 ! WRITE(*,*) "What Is The Final Variable Value?"
@@ -379,7 +379,20 @@ END DO
 ! WRITE(*,*) "Do You Wish To Correct Any Of The Input Variable Information?"
 ! READ(*,*) Yorn
 
-CALL Closure(Loop_seq, Init_pos, 1, Ec)
+C = 0
+Var_increm = 1
+Var_final = 1
+
+! START OF THE MAIN CALCULATION LOOP
+!
+
+DO T = 0,Var_final,Var_increm
+   DO
+      C = C + 1
+      CALL Closure(Loop_seq, Init_pos, 1, Ec)
+      EXIT
+   END DO
+END DO
 
 Level = 0
 
