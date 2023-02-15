@@ -381,18 +381,21 @@ END DO
 
 C = 0
 Var_start = 0.0
+Var_position = Var_start
 Var_increm = 1.0
 Var_final = 1.0
 
 ! START OF THE MAIN CALCULATION LOOP
 !
 
-DO T = Var_start,Var_final,Var_increm
+DO
    DO
       C = C + 1
       CALL Closure(Loop_seq, Init_pos, 1, Ec)
       EXIT
    END DO
+   Var_position = Var_position + Var_increm
+   If (Var_position .GT. Var_final) EXIT
 END DO
 
 Level = 0
