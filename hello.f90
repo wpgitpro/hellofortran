@@ -34,7 +34,7 @@ INTEGER Depend(10,2)
 
 INTEGER Com_ident(10,3), Com(10)
 INTEGER Var_num
-REAL Var_increm, Var_final
+REAL Var_increm, Var_final, Var_start
 INTEGER Level
 
 LOGICAL :: lexist, ltest
@@ -380,13 +380,14 @@ END DO
 ! READ(*,*) Yorn
 
 C = 0
-Var_increm = 1
-Var_final = 1
+Var_start = 0.0
+Var_increm = 1.0
+Var_final = 1.0
 
 ! START OF THE MAIN CALCULATION LOOP
 !
 
-DO T = 0,Var_final,Var_increm
+DO T = Var_start,Var_final,Var_increm
    DO
       C = C + 1
       CALL Closure(Loop_seq, Init_pos, 1, Ec)
