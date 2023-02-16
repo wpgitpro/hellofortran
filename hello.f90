@@ -34,7 +34,7 @@ INTEGER Depend(10,2)
 
 INTEGER Com_ident(10,3), Com(10)
 INTEGER Var_num
-REAL Var_increm, Var_final, Var_start
+REAL Var_increm, Var_final, Var_start, Var_position
 INTEGER Level
 
 LOGICAL :: lexist, ltest
@@ -48,8 +48,8 @@ COMMON /fe1/ mename
 
 ltest = .TRUE.
 
-linka = Polar_rect(5.0,60.0)
-WRITE(*,*) linka
+! linka = Polar_rect(5.0,60.0)
+! WRITE(*,*) linka
 
 IF (.NOT. ltest) THEN
 !
@@ -394,6 +394,7 @@ DO
       CALL Closure(Loop_seq, Init_pos, 1, Ec)
       EXIT
    END DO
+   WRITE(*,*) "Position ", Var_position
    Var_position = Var_position + Var_increm
    If (Var_position .GT. Var_final) EXIT
 END DO
