@@ -20,6 +20,64 @@ REAL(8) :: Model(250)
 ! REAL :: Extra(20)
 ! REAL :: lngth(10)
 !
+! What is a Model?
+!
+! Model Description
+!
+! Model(1) = NV Total number of vectors
+! Model(2) = NL Number of Loops
+! Model(3) = MAXV Max vectors in loop 
+! Model(4) = NCOM ncom 
+! Model(5) = NINPUT ninput 
+! 
+! Link lengths in the model array start at 6 and angles start at (6 + NV) 
+! 
+! Initial length and angle
+!
+! I = 1
+! DO 10 N=I, NV
+!     Len(I)=Model(I+5)
+!     Ang(I)=Model(I+5+NV)
+! 10 CONTINUE
+!
+! I=5+2*NV+1
+! DO 20 N=I, I+2*NL-1
+!    ! Depend(C)=Model(N)
+!    IF Model(N+2*Model(2)) .GE. 0 THEN
+!       Depend(C) = "A"
+!    ELSE
+!       Depend(C) = "L"
+!    END IF
+!    C = C + 1
+! 20 CONTINUE
+!
+! I = I+4*Model(2)
+! IF Model(4) .EQ. 0 THEN
+! END IF
+!
+! 
+!
+! I=I+4*NL
+! IF (NC.EQ.0) GOTO 40
+! DO 30 N=1,NC
+!    N1=(N-1)*3+I
+!    CID(N,1)=INT(MODEL(N1))
+!    CID(N,2)=INT(MODEL(N1+1))
+!    CID(N,3)=INT(MODEL(I+3*NC+N-1))
+!    COMDIF(N)=MODEL(N1+2)
+! 30 CONTINUE
+! 40 I=I+4*NC
+! DO 50 N=1,NL
+!    DO 45 R=1,8
+!       N1=I+(N-1)*8+R-1
+!       LS(N,R)=INT(MODEL(N1))
+!    45 CONTINUE
+! 50 CONTINUE
+! ND = INT(RESULT(2))
+! NUMCAS = INT(RESULT(3))
+! 
+! End of Model Description
+!
 ! REAL(8) Len, Ang
 REAL(8) Len(3,20), Ang(3,20)
 !
@@ -53,60 +111,6 @@ COMPLEX Polar_rect, Init_pos(20), Ec
 !
 COMMON /fe1/ mename
 !
-!
-! Model Description
-!
-! Model(1) Total number of vectors
-! Model(2) Number of Loops
-! Model(3) Max vectors in loop 
-! Model(4) ncom 
-! Model(5) ninput 
-    ! 
-    ! Link lengths in the model array start at 6 and angles start at (6 + nv) 
-    ! 
-    ! C = 1
-    ! DO 10 N=6,Model(1)+5
-    !     Len(1,C)=Model(N)
-    !     Ang(1,C)=Model(N+Model(1))
-    ! 10 CONTINUE
-    !
-    ! C = 1
-    ! I=6+2*Model(1)
-    ! DO 20 N=I, I+2*Model(2)-1
-    !    ! Depend(C)=Model(N)
-    !    IF Model(N+2*Model(2)) .GE. 0 THEN
-    !       Depend(C) = "A"
-    !    ELSE
-    !       Depend(C) = "L"
-    !    END IF
-    !    C = C + 1
-    ! 20 CONTINUE
-    !
-    ! I = I+4*Model(2)
-    ! IF Model(4) .EQ. 0 THEN
-    ! END IF
-    !
-    ! 
-    !
-    ! I=I+4*NL
-    ! IF (NC.EQ.0) GOTO 40
-    ! DO 30 N=1,NC
-    !    N1=(N-1)*3+I
-    !    CID(N,1)=INT(MODEL(N1))
-    !    CID(N,2)=INT(MODEL(N1+1))
-    !    CID(N,3)=INT(MODEL(I+3*NC+N-1))
-    !    COMDIF(N)=MODEL(N1+2)
-    ! 30 CONTINUE
-    ! 40 I=I+4*NC
-    ! DO 50 N=1,NL
-    !    DO 45 R=1,8
-    !       N1=I+(N-1)*8+R-1
-    !       LS(N,R)=INT(MODEL(N1))
-    !    45 CONTINUE
-    ! 50 CONTINUE
-    ! ND = INT(RESULT(2))
-    ! NUMCAS = INT(RESULT(3))
-    ! 
 !
 !
 ltest = .FALSE.
@@ -263,9 +267,7 @@ DO N = 1, NL
   END DO
 END DO
 !
-!
-! Vector information is now accepted for the initial position
-!
+! Specify initial position
 !
 WRITE(*,*) "PLEASE SUPPLY THE FOLLOWING FOR EACH VECTOR, FOR THE INITIAL POSITION"
 DO N=1, NV
@@ -280,10 +282,8 @@ DO N=1, NV
    Init_pos(N) = Polar_rect(Len(1,N), Ang(1,N))
 END DO
 !
-!
-! Common Variables Are Identified In The Following Block
+! Identify common links
 ! (For Multi-Loop Mechanisms Only)
-!
 !
 IF (NL .GT. 1) THEN
   DO N=1, NCOM
@@ -308,11 +308,11 @@ END IF
 !
 WRITE(*,*) "PLEASE SUPPLY THE FOLLOWING INFORMATION FOR EACH DEPENDENT VARIABLE"
 !
-DO N=1,Nd  
+DO N=1,ND 
   WRITE(*,*) "FOR DEPENDENT VARIABLE NUMBER", N
   WRITE(*,*) "Variable's Vector Number ?"
   READ(*,*) Depend(N,1)
-  Model(5+2*Nv+N)=Depend(N,1)
+  Model(5+2*NV+N)=Depend(N,1)
   WRITE(*,*) "Is The Variable An Angle Or A Length ? (A or L)"
   READ(*,*) mtype
   IF (mtype .EQ. "A") THEN
@@ -329,14 +329,14 @@ END DO
 !
 ! Insert code for Loop_con here
 !
-! Loop_con(Loop_con(*), Ls(*), Com_ident(*), Com$(*), Nl, Ncom)
+! Loop_con(Loop_con(*), Ls(*), Com_ident(*), Com$(*), NL, NCOM)
 !
 IF (Nl .GT. 1) THEN
 !
    Count = 1
    S = 1
 !
-   DO N=S, Nl  
+   DO N=S, NL  
    END DO
 !   
 END IF
@@ -380,7 +380,7 @@ END IF
 !
 !
 IF (.NOT. ltest) THEN
-DO N=1, Ninput
+DO N=1, NINPUT
    IF (N .EQ. 1) THEN
       WRITE(*,*) "THE FOLLOWING INPUT VARIABLE MOTIONS ARE AVAILABLE:"
       WRITE(*,*) "         MOTION NUMBER               MOTION TYPE   "
@@ -392,7 +392,7 @@ DO N=1, Ninput
       WRITE(*,*) "               6                     User Defined Function #4"
       WRITE(*,*) "               7                     User Defined Function #5"
    END IF
-   IF (Ninput .EQ. 1) THEN
+   IF (NINPUT .EQ. 1) THEN
       WRITE(*,*) "FOR THE INPUT VARIABLE"
    ELSE
       WRITE(*,*) "FOR THE INPUT VARIABLE ", N
