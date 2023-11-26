@@ -1,28 +1,20 @@
-!
+! Author:
 ! Version: 0.1.3
 ! Start Date: Nov 21
 !
 PROGRAM MAIN
-!
-! IMPLICIT NONE
-!
+IMPLICIT NONE
 CHARACTER(LEN=20) :: modelname, mename
 CHARACTER*1 :: prev
 CHARACTER*1 :: mtype, Increment
-!
-INTEGER :: NL, NV, MAXV, ND, NC, NCOM, NINPUT, NUML
-!
+INTEGER :: NV, NL, MAXV, NC, NINPUT, ND, NCOM, NUML
 INTEGER, DIMENSION(2,10) :: Loop_seq
-!
 INTEGER :: Count, S, N, P
-!
 REAL(8) :: Model(250)
-! REAL :: Extra(20)
-! REAL :: lngth(10)
+REAL :: Extra(20)
+REAL :: lngth(10)
 !
-! What is a Model?
-!
-! Model Description
+! Model Definition
 !
 ! Model(1) = NV Total number of vectors
 ! Model(2) = NL Number of Loops
@@ -40,10 +32,13 @@ REAL(8) :: Model(250)
 !     Ang(I)=Model(I+5+NV)
 ! 10 CONTINUE
 !
+! Dependent Variables
+!
+! C = 1
 ! I=5+2*NV+1
 ! DO 20 N=I, I+2*NL-1
-!    ! Depend(C)=Model(N)
-!    IF Model(N+2*Model(2)) .GE. 0 THEN
+!    Depend(C)=Model(N)
+!    IF Model(N+2*NL) .GE. 0 THEN
 !       Depend(C) = "A"
 !    ELSE
 !       Depend(C) = "L"
@@ -55,7 +50,7 @@ REAL(8) :: Model(250)
 ! IF Model(4) .EQ. 0 THEN
 ! END IF
 !
-! 
+! Common vector pairs 
 !
 ! I=I+4*NL
 ! IF (NC.EQ.0) GOTO 40
@@ -97,8 +92,6 @@ REAL Input(5,10)
 INTEGER Depend(10,2)
 !
 INTEGER Com_ident(10,3), Com(10)
-! INTEGER Var_num
-! REAL Var_increm, Var_final
 INTEGER Level
 !
 LOGICAL :: lexist, ltest
@@ -107,9 +100,7 @@ LOGICAL :: lexist, ltest
 ! REAL(kind=8) :: E(10)
 !
 COMPLEX Polar_rect, Init_pos(20), Ec
-! COMPLEX Curr_pos(20)
-!
-COMMON /fe1/ mename
+COMPLEX, DIMENSION(20) Curr_pos
 !
 !
 !
@@ -118,81 +109,7 @@ ltest = .FALSE.
 ! IF (.NOT. ltest) THEN
 !
 !
-!
-! FAME
-!
-! MAXV - Maximum number of vectors in a loop
-!        Set to NV if single loop mechanism
-!
-! Common block IS1
-!
-! NV - The number of vectors in the mathematical representation
-! NL - The number of vector loops in the mathematical representation
-!      of the Mechanism
-! MODEL(3)
-! NC - The number of common vectors in the mathematical representation
-! NI - The number of independent (or input) parameters
-!
-! NCOM - The number of common vector pairs
 
-! NUMCAS - The number of cases (i.e. the number of mechanism positions analyzed)
-! NMLINK - The number of moving links in the mechanism
-!
-! NN - The number of nodes in the mechanism. These are the
-!      points where vectors meet and the locations of the reaction forces
-!
-! Common block IA1
-! LS(5,8) - Contains vector loop sequence information
-! CID(10,3) - Stores information about common vector pairs
-!             Primary vector, secondary vector, Angle or Length
-! IN(10,2) - Stores information to identify the independent (input) parameters
-!            Vector number, Angle or Length
-! DEP(10,2) - Stores information to identify the dependent parameters
-!             Vector number, Angle or Length
-! REFDIR(20,2) - Is a reference table for all the vector directions
-! REFMAG(20,2)
-! LINKID(20,11)
-! COMLKS(20)
-! CLCON(4,20)
-! PATH(20,2)
-!
-! Common block RA1
-! Common block RA2
-! Common block RA3
-!
-!
-! GNLink
-!
-! Input(N,Ninput)
-! 1 - Initial Displacement
-! 2 - Initial Velocity
-! 3 - Initial Acceleration
-! 4 - Motion Type (see below)
-! 5 - Vector Number of Input
-!
-! Input$
-! A or L for each input
-! Values for 1 to Ninput
-!
-! Com_ident(Nc, 3) Com$(Nc) (see CID above)
-!
-! Pva(3,Ninput) current values for input variables
-! 1 - Current Displacement
-! 2 - Current Velocity
-! 3 - Current Acceleration
-!
-! Res(1000)
-!
-! E(Nd)
-! Coeff(Nd, Nd)
-! Inv_coeff(Nd, Nd)
-!
-! Const(Nd, 1)
-! Prod(Nd, 1)
-! Loop_seq(Nl, Maxv+1)
-! Depend(Nd) Depend$(Nd)
-! Input(5, Ninput) Input4(Ninput)
-!
 modelname = "model.dat" 
 WRITE(*,*) 'Has the mechanism model been previously stored on file ? (Y or N) '
 READ(*,*) prev
@@ -224,22 +141,22 @@ END IF
 !
 WRITE(*,*) "Number Of Dependent Variables ?"
 READ(*,*) ND
-WRITE(*,*) ND
+! WRITE(*,*) ND
 !
 ! The number of dependent variables should equal the number of loops times 2
 !
-ND = 2*NL
+! ND = 2*NL
 !
 WRITE(*,*) "Number Of Inputs ?"
 READ(*,*) NI
-WRITE(*,*) NI
+! WRITE(*,*) NI
 !
 ! Do the Main_sub part
 ! The loop sequences are stored in Loop_seq with P+1 entries for each loop
 !
-!
 WRITE(*,*) "***** THE LOOP VECTOR SEQUENCES MUST BE SPECIFIED *****"
 DO N = 1, NL
+  !
   IF (NL .EQ. 1) THEN
     Loop_seq(N,1) = NV  
   ELSE
@@ -265,6 +182,7 @@ DO N = 1, NL
      Model(INT(5+4*NCOM+(N-1)*(MAXV+1)+2*NV+4*NL+P)) = Loop_seq(N,P)
      !
   END DO
+  !
 END DO
 !
 ! Specify initial position
@@ -453,7 +371,8 @@ END DO
 ! WRITE(*,*) "Do You Wish To Correct Any Of The Input Variable Information?"
 ! READ(*,*) Yorn
 !
-CALL Closure(Loop_seq, Init_pos, 1, Ec)
+Curr_pos = Init_pos
+CALL Closure(Loop_seq, Curr_pos, 1, Ec)
 !
 Level = 0
 !
@@ -466,22 +385,15 @@ WRITE(*,*) "End of program"
 STOP 0 
 END PROGRAM MAIN
 
-
-
 SUBROUTINE Closure(Loop_seq, Init_pos, Loop, Ec)
    INTEGER, DIMENSION(2,10), INTENT(IN) :: Loop_seq
    INTEGER, INTENT(IN) :: Loop
    COMPLEX, DIMENSION(20), INTENT(IN) :: Init_pos
    COMPLEX, INTENT(INOUT) :: Ec
    INTEGER :: Vec, Dir
-   ! Loop = 1
    DO N=2, Loop_seq(Loop,1)+1
-      Vec = ABS(Loop_seq(1,N))
-      IF (Loop_seq(1,N) .GT. 0) THEN
-         Dir = 1
-      ELSE
-         Dir = -1
-      END IF
+      Vec = ABS(Loop_seq(Loop,N))
+      Dir = Loop_seq(Loop,N)/Vec
       Ec = Ec + Init_pos(Vec)*Dir
    END DO
    WRITE(*,*) Ec
@@ -493,7 +405,7 @@ COMPLEX FUNCTION Polar_rect(inputlen, inputang)
    Polar_rect = cmplx(inputlen * COS(inputang*pi/180), inputlen * SIN(inputang*pi/180))
 END FUNCTION
 
-SUBROUTINE grashof(lngth)
+SUBROUTINE Grashof(lngth)
 REAL, INTENT(IN) :: lngth(4)
 REAL lmax,lmin,la,lb
 CHARACTER*20 mename
@@ -552,3 +464,80 @@ WRITE (*,'(A,A,A)') 'MECH. TYPE = ',mename,' <ENTER>'
 read(5,*)
 return
 end
+
+
+!
+! FAME
+!
+! MAXV - Maximum number of vectors in a loop
+!        Set to NV if single loop mechanism
+!
+! Common block IS1
+!
+! NV - The number of vectors in the mathematical representation
+! NL - The number of vector loops in the mathematical representation
+!      of the Mechanism
+! MODEL(3)
+! NC - The number of common vectors in the mathematical representation
+! NI - The number of independent (or input) parameters
+!
+! NCOM - The number of common vector pairs
+
+! NUMCAS - The number of cases (i.e. the number of mechanism positions analyzed)
+! NMLINK - The number of moving links in the mechanism
+!
+! NN - The number of nodes in the mechanism. These are the
+!      points where vectors meet and the locations of the reaction forces
+!
+! Common block IA1
+! LS(5,8) - Contains vector loop sequence information
+! CID(10,3) - Stores information about common vector pairs
+!             Primary vector, secondary vector, Angle or Length
+! IN(10,2) - Stores information to identify the independent (input) parameters
+!            Vector number, Angle or Length
+! DEP(10,2) - Stores information to identify the dependent parameters
+!             Vector number, Angle or Length
+! REFDIR(20,2) - Is a reference table for all the vector directions
+! REFMAG(20,2)
+! LINKID(20,11)
+! COMLKS(20)
+! CLCON(4,20)
+! PATH(20,2)
+!
+! Common block RA1
+! Common block RA2
+! Common block RA3
+!
+!
+! GNLink
+!
+! Input(N,Ninput)
+! 1 - Initial Displacement
+! 2 - Initial Velocity
+! 3 - Initial Acceleration
+! 4 - Motion Type (see below)
+! 5 - Vector Number of Input
+!
+! Input$
+! A or L for each input
+! Values for 1 to Ninput
+!
+! Com_ident(Nc, 3) Com$(Nc) (see CID above)
+!
+! Pva(3,Ninput) current values for input variables
+! 1 - Current Displacement
+! 2 - Current Velocity
+! 3 - Current Acceleration
+!
+! Res(1000)
+!
+! E(Nd)
+! Coeff(Nd, Nd)
+! Inv_coeff(Nd, Nd)
+!
+! Const(Nd, 1)
+! Prod(Nd, 1)
+! Loop_seq(Nl, Maxv+1)
+! Depend(Nd) Depend$(Nd)
+! Input(5, Ninput) Input4(Ninput)
+!
