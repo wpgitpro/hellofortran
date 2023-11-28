@@ -4,15 +4,18 @@
 !
 PROGRAM MAIN
 IMPLICIT NONE
+!
 CHARACTER(LEN=20) :: modelname, mename
 CHARACTER*1 :: prev
 CHARACTER*1 :: mtype, Increment
+!
 INTEGER :: NV, NL, MAXV, NC, NINPUT, ND, NCOM, NUML
 INTEGER, DIMENSION(2,10) :: Loop_seq
 INTEGER :: Count, S, N, P
+!
 REAL(8) :: Model(250)
-REAL :: Extra(20)
-REAL :: lngth(10)
+! REAL :: Extra(20)
+! REAL :: lngth(10)
 !
 ! Model Definition
 !
@@ -73,8 +76,11 @@ REAL :: lngth(10)
 ! 
 ! End of Model Description
 !
-! REAL(8) Len, Ang
-REAL(8) Len(3,20), Ang(3,20)
+! REAL(8) Len(3,20), Ang(3,20)
+! Replace Len with RM and Ang with RA
+! First derivative with start with D and second with DD
+!
+REAL RM(20), RA(20), DRM(20), DRA(20), DDRM(20), DDRA(20)
 !
 ! , Real, Imag, E, Coeff, Inv_coeff, Const, Prod
 !
@@ -82,7 +88,6 @@ REAL(8) Len(3,20), Ang(3,20)
 REAL Input(5,10)
 ! REAL Pva(3,10)
 ! CHARACTER*1 :: InputType(10)
-!
 !
 ! Depend and Depend$ from GNLink
 ! Depend(10,N) where N is
@@ -99,17 +104,12 @@ LOGICAL :: lexist, ltest
 ! REAL(kind=8), dimension(3) :: y,z
 ! REAL(kind=8) :: E(10)
 !
-COMPLEX Polar_rect, Init_pos(20), Ec
-COMPLEX, DIMENSION(20) Curr_pos
-!
-!
+COMPLEX Polar_rect, Init_pos(20), Curr_pos(20), Ec
 !
 ltest = .FALSE.
 !
 ! IF (.NOT. ltest) THEN
 !
-!
-
 modelname = "model.dat" 
 WRITE(*,*) 'Has the mechanism model been previously stored on file ? (Y or N) '
 READ(*,*) prev
@@ -148,8 +148,8 @@ READ(*,*) ND
 ! ND = 2*NL
 !
 WRITE(*,*) "Number Of Inputs ?"
-READ(*,*) NI
-! WRITE(*,*) NI
+READ(*,*) NINPUT
+! WRITE(*,*) NINPUT
 !
 ! Do the Main_sub part
 ! The loop sequences are stored in Loop_seq with P+1 entries for each loop
@@ -191,13 +191,13 @@ WRITE(*,*) "PLEASE SUPPLY THE FOLLOWING FOR EACH VECTOR, FOR THE INITIAL POSITIO
 DO N=1, NV
    WRITE(*,*) 'For Vector Number ', N
    WRITE(*,*) 'Vector Length ?'
-   READ(*,*) Len(1,N)
-   Model(5+N) = Len(1,N)
+   READ(*,*) RM(N)
+   Model(5+N) = RM(N)
    WRITE(*,*) 'Vector Angle ?'
-   READ(*,*) Ang(1,N)
-   Model(5+NV+N) = Ang(1,N)
+   READ(*,*) RA(N)
+   Model(5+NV+N) = RA(N)
    ! Set initial position in complex coordinates
-   Init_pos(N) = Polar_rect(Len(1,N), Ang(1,N))
+   Init_pos(N) = Polar_rect(RM(N), RA(N))
 END DO
 !
 ! Identify common links
@@ -226,11 +226,13 @@ END IF
 !
 WRITE(*,*) "PLEASE SUPPLY THE FOLLOWING INFORMATION FOR EACH DEPENDENT VARIABLE"
 !
-DO N=1,ND 
+DO N=1, ND 
   WRITE(*,*) "FOR DEPENDENT VARIABLE NUMBER", N
   WRITE(*,*) "Variable's Vector Number ?"
   READ(*,*) Depend(N,1)
-  Model(5+2*NV+N)=Depend(N,1)
+  !
+  Model(5+2*NV+N) = Depend(N,1)
+  !
   WRITE(*,*) "Is The Variable An Angle Or A Length ? (A or L)"
   READ(*,*) mtype
   IF (mtype .EQ. "A") THEN
@@ -240,13 +242,15 @@ DO N=1,ND
   ELSE
      Depend(N,2) = 0
   END IF
-  Model(5+2*Nv+2*Nl+N)=Depend(N,2)
+  !
+  Model(5+2*NV+2*NL+N)=Depend(N,2)
+  !
 END DO
 !
 ! Loop Connection Is Determined in SUB Loop_con
 !
 ! Insert code for Loop_con here
-!
+! Call Loop_con()
 ! Loop_con(Loop_con(*), Ls(*), Com_ident(*), Com$(*), NL, NCOM)
 !
 IF (Nl .GT. 1) THEN
@@ -296,8 +300,8 @@ END IF
 ! 6 - User Defined
 ! 7 - User Defined
 !
-!
 IF (.NOT. ltest) THEN
+  !
 DO N=1, NINPUT
    IF (N .EQ. 1) THEN
       WRITE(*,*) "THE FOLLOWING INPUT VARIABLE MOTIONS ARE AVAILABLE:"
@@ -391,6 +395,7 @@ SUBROUTINE Closure(Loop_seq, Init_pos, Loop, Ec)
    COMPLEX, DIMENSION(20), INTENT(IN) :: Init_pos
    COMPLEX, INTENT(INOUT) :: Ec
    INTEGER :: Vec, Dir
+   Ec = CMPLX(0.0,0.0)
    DO N=2, Loop_seq(Loop,1)+1
       Vec = ABS(Loop_seq(Loop,N))
       Dir = Loop_seq(Loop,N)/Vec
